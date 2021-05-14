@@ -5,7 +5,6 @@ import mongoose from 'mongoose';
 const centerSchema = new mongoose.Schema({
     center_id: {
         Number,
-        minLength: 1,
         required: true
     },
     name: {
