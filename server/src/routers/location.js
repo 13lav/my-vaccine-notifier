@@ -8,8 +8,8 @@ import {
 const router = express.Router();
 
 router
-    .route('/:state_id/:district_id')
-    .get(getLocationByDistrict)
+    .route('/district')
+    .post(getLocationByDistrict)
 /*
 router
     .route('/:state_id')

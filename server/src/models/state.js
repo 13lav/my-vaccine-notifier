@@ -1,19 +1,19 @@
 import mongoose from 'mongoose';
-import District from './district'
+import District from './district.js'
 // schema for state
 
 
 const stateSchema = new mongoose.Schema({
     state_id: {
-        Number,
+        type: Number,
         required: true
     },
     state_name: {
-        String,
+        type: String,
         minLength: 1,
         required: true
     },
-    Districts: [District],
+    Districts: [District.schema],
 }, { timestamps: true });
 
 const State = mongoose.model('State', stateSchema);

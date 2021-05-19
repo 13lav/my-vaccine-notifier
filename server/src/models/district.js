@@ -1,28 +1,28 @@
 import mongoose from 'mongoose';
-import Center from './center';
+import Center from './center.js';
 
 // schema for district
 
 const districtSchema = new mongoose.Schema({
     district_id: {
-        Number,
+        type: Number,
         required: true
     },
     district_name: {
-        String,
+        type: String,
         minLength: 1,
         required: true
     },
     state_id: {
-        Number,
+        type: Number,
         required: true
     },
     state_name: {
-        String,
+        type: String,
         minLength: 1,
         required: true
     },
-    centers: [Center],
+    centers: [Center.schema],
 }, { timestamps: true });
 
 const District = mongoose.model('District', districtSchema);

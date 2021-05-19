@@ -4,43 +4,43 @@ import mongoose from 'mongoose';
 
 const centerSchema = new mongoose.Schema({
     center_id: {
-        Number,
+        type: Number,
         required: true
     },
     name: {
-        String,
-        minLength: 1,
+        type: String,
+        minLength: 2,
         required: true,
     },
     address: {
-        String,
-        minLength: 1,
+        type: String,
+        minLength: 2,
         required: true,
     },
     state_name: {
-        String,
+        type: String,
         required: true,
     },
     district_name: {
-        String,
+        type: String,
         required: true,
     },
     block_name: {
-        String,
+        type: String,
         required: true,
     },
     pincode: {
-        String,
+        type: String,
         required: true,
     },
     location: {
         lat: {
-            type: number($float),
+            type: Number,
             minimum: 8.06,
             maximum: 37.1
         },
         lng: {
-            type: number($float),
+            type: Number,
             minimum: 68.11,
             maximum: 97.41
         },
