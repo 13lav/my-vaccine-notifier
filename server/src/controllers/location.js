@@ -1,3 +1,5 @@
+import fetch from 'node-fetch';
+
 import Center from '../models/center.js';
 import District from '../models/district.js';
 import State from '../models/state.js';
@@ -14,7 +16,9 @@ export const getLatLong = async (center) => {
     else block_name = ""
 
     try {
-        let response = await fetch(`https://nominatim.openstreetmap.org/search?q=${name},${address}+${block_name}+${district_name}&state=${state_name}&country=India&postalcode=${center.pincode}&limit=1&format=json`, {
+        let url = `https://nominatim.openstreetmap.org/search?q=${name},${district_name}&state=${state_name}&country=India&postalcode=${center.pincode}&limit=1&format=json`
+        console.log(url)
+        let response = await fetch(url, {
             method: 'GET',
             //mode: 'no-cors',
             headers: {
@@ -23,7 +27,7 @@ export const getLatLong = async (center) => {
             //body: JSON.stringify(user)
         })
         let res = await response.json()
-        //console.log(res)
+        console.log(res)
         return res
     } catch (err) {
         console.log(err)
@@ -46,40 +50,97 @@ export const addCenter = async (center) => {
             long: 72
         }
     }
+    console.log(3)
 
-    getLatLong(newCenter).then((res) => {
-        //assign latlong values
-        if (res.length() === 0)
-            return null;
+    try {
+        getLatLong(newCenter).then((res) => {
+            //assign latlong values
+            if (!res[0])
+                return null;
 
-        newCenter.location.lat = res[0].lat
-        newCenter.location.long = res[0].lon
+            newCenter.location.lat = res[0].lat
+            newCenter.location.long = res[0].lon
 
-        try {
-            const doc = Center.create(newCenter).exec((err, data) => {
-                return doc
-            })
-        } catch (e) {
-            console.error(e);
-        }
-    })
+            const center = new Center(newCenter)
+
+            try {
+                center.save((error, data) => {
+                    if (error) {
+                        console.error(error);
+                    }
+                    if (data) {
+                        return data
+                    }
+                });
+            } catch (e) {
+                console.error(e);
+            }
+        })
+    } catch (e) {
+        console.error(e);
+    }
 }
 
 export const processCenters = async (req) => {
+    console.log(2)
 
     try {
-        const districtData = await District
-            .findOne({ district_id: req.params.district_id })
+        let districtData = await District
+            .findOne({ district_id: req.query.district_id })
             .lean()
             .exec();
 
+        const doc = [];
+
         if (!districtData) {
-            return null;
+            var center = req.body.sessions[0]
+            var newDistrict = {
+                district_id: req.query.district_id,
+                district_name: center.district_name,
+                state_id: req.query.state_id,
+                state_name: center.state_name,
+                centers: []
+            }
+            //console.log(req.body.sessions)
+            const district = new District(newDistrict)
+
+            try {
+                district.save((error, data) => {
+                    if (error) {
+                        console.error(error);
+                    }
+                    if (data) {
+                        districtData = data
+                    }
+                });
+            } catch (e) {
+                console.error(e);
+            }
+
+            if (req.body.sessions[0]) {
+                await req.body.sessions.forEach((center, idx) => {
+
+                    addCenter(center)
+                        .then((newCenter) => {
+                            if (newCenter != null) {
+                                doc = [...doc, newCenter]
+                                districtData.centers = doc
+                            }
+                        })
+                        .catch((err) => {
+                            console.log(err)
+                        })
+
+                })
+                console.log(districtData)
+                console.log(doc)
+                return districtData
+            }
+            else return null
         }
 
-        const doc = [];
-        if (req.body.centers.length() != 0) {
-            await req.body.centers.forEach((center, idx) => {
+        if (req.body.length() != 0) {
+            await req.body.forEach((center, idx) => {
 
                 var obj = districtData.find(obj => obj.center_id === center.center_id);
 
@@ -98,24 +159,28 @@ export const processCenters = async (req) => {
                         })
                 }
             })
+            console.log(districtData)
+            console.log(doc)
             return districtData
         }
-
-        res.status(200).json({ data: doc });
+        console.log(districtData)
+        console.log(doc)
+        //res.status(200).json({ data: doc });
     } catch (e) {
         console.error(e);
-        res.status(400).end();
+        //res.status(400).end();
     }
 
 }
 
 export const getLocationByDistrict = async (req, res) => {
+    console.log(1)
 
     try {
 
         await processCenters(req).then(async (districtData) => {
 
-            if (districtData && districtData.centers.length) {
+            if (districtData && districtData.centers.length()) {
                 const id = districtData._id
                 await District.findByIdAndUpdate({ id }, districtData, function (err, result) {
                     if (err) {

@@ -1,5 +1,5 @@
 import express from 'express';
-//import cors from 'cors';
+import cors from 'cors';
 import mongoose from 'mongoose';
 
 import { config } from './config/config.js';
@@ -8,7 +8,7 @@ import bodyParser from 'body-parser';
 import locationRoutes from './routers/location.js';
 
 const app = express();
-//app.use(cors());
+app.use(cors());
 app.use(bodyParser.urlencoded({ extended: false }));
 app.use(bodyParser.json());
 
