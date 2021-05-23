@@ -37,7 +37,7 @@ export const getLatLong = async (center) => {
     }
 }
 
-export const addCenter = async (center) => {
+export const addCenter = async (center, callback) => {
     const newCenter = {
         center_id: center.center_id,
         name: center.name,
@@ -63,49 +63,23 @@ export const addCenter = async (center) => {
             newCenter.location.long = res[0].lon
 
             const center = new Center(newCenter)
-            /*
-            try {
-                const newUser = new User({
-                    'email': req.body.email,
-                    'name': req.body.name
-                });
-                console.log('before save');
-                let saveUser = await newUser.save(); //when fail its goes to catch
-                console.log(saveUser); //when success it print.
-                console.log('after save');
-                } catch (err) {
-                console.log('err' + err);
-                res.status(500).send(err);
-                }
-            */
-            /*
-                 (error, data) => {
-                     if (error) {
-                         console.error(error);
-                     }
-                     if (data) {
-                         console.log("data", data)
-                         return data
-                     }
-                 }
-            */
+
             try {
                 let savedCenter = center.save().then((data) => {
-                    console.log(savedCenter, data)
-                    return data
+                    //console.log(savedCenter, data)
+                    callback(data)
                 })
-                //console.log(savedCenter)
-                //return savedCenter
             } catch (e) {
                 console.error(e);
             }
+
         })
     } catch (e) {
         console.error(e);
     }
 }
 
-export const processCenters = async (req) => {
+export const processCenters = async (req, callback) => {
     console.log(2)
 
     try {
@@ -114,10 +88,10 @@ export const processCenters = async (req) => {
             .lean()
             .exec();
 
-        const doc = [];
+        let doc = [];
 
         if (!districtData) {
-            var center = req.body.sessions[0]
+            //var center = req.body.sessions[0]
             var newDistrict = {
                 district_id: req.query.district_id,
                 district_name: center.district_name,
@@ -155,15 +129,32 @@ export const processCenters = async (req) => {
                         .catch((err) => {
                             console.log(err)
                         })
-
                 })
-                //console.log(districtData)
-                //console.log(doc)
                 return districtData
             }
             else return null
         }
-
+        /*
+                if (req.body.sessions[0]) {
+                    await req.body.sessions.forEach((center, idx) => {
+        
+                        var obj = districtData.centers.find(obj => obj.center_id === center.center_id);
+        
+                        if (obj)
+                            doc = [...doc, obj];
+                        else {
+                            addCenter((center), (newCenter) => {
+                                console.log("newCenter2", newCenter)
+                                if (newCenter != null) {
+                                    doc = [...doc, newCenter]
+                                    districtData.centers = doc
+                                }
+                            })
+                        }
+                    })
+                    return districtData
+                }
+        */
         if (req.body.sessions[0]) {
             await req.body.sessions.forEach((center, idx) => {
 
@@ -172,30 +163,23 @@ export const processCenters = async (req) => {
                 if (obj)
                     doc = [...doc, obj];
                 else {
-                    addCenter(center)
-                        .then((newCenter) => {
-                            console.log("newCenter2", newCenter)
-                            if (newCenter != null) {
-                                doc = [...doc, newCenter]
-                                //console.log(doc)
-                                districtData.centers.push(newCenter);
-                            }
-                        })
-                        .catch((err) => {
-                            console.log(err)
-                        })
+                    addCenter((center), (newCenter) => {
+                        console.log("newCenter2", newCenter)
+                        if (newCenter != null) {
+                            doc = [...doc, newCenter]
+                            districtData.centers = doc
+                        }
+                        if (idx + 1 == req.body.sessions.length) {
+                            console.log(req.body.sessions.length, idx + 1)
+                            //console.log(districtData)
+                            callback(districtData)
+                        }
+                    })
                 }
             })
-            //console.log(districtData)
-            //console.log(doc)
-            return districtData
         }
-        //console.log(districtData)
-        //console.log(doc)
-        //res.status(200).json({ data: doc });
     } catch (e) {
         console.error(e);
-        //res.status(400).end();
     }
 
 }
@@ -204,9 +188,25 @@ export const getLocationByDistrict = async (req, res) => {
     console.log(1)
 
     try {
-
-        await processCenters(req).then(async (districtData) => {
-            //console.log(districtData)
+        /*
+                await processCenters(req).then(async (districtData) => {
+                    console.log(districtData)
+                    if (districtData) {
+                        const id = districtData._id
+                        await District.findByIdAndUpdate(id, districtData, function (err, result) {
+                            if (err) {
+                                res.send(err)
+                            }
+                            if (result)
+                                res.status(200).json({ data: result })
+                        })
+                    }
+                    else
+                        res.status(404).json({ error: 'No centers available' });
+                })
+        */
+        await processCenters(req, async (districtData) => {
+            console.log(districtData)
             if (districtData) {
                 const id = districtData._id
                 await District.findByIdAndUpdate(id, districtData, function (err, result) {
