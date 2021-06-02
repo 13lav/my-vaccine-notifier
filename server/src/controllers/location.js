@@ -37,7 +37,7 @@ export const getLatLong = async (center) => {
     }
 }
 
-export const addCenter = async (center, callback) => {
+export const addCenter = (center, callback) => {
     const newCenter = {
         center_id: center.center_id,
         name: center.name,
@@ -56,8 +56,10 @@ export const addCenter = async (center, callback) => {
     try {
         getLatLong(newCenter).then((res) => {
             //assign latlong values
+            console.log(res)
             if (!res[0])
                 return null;
+            console.log(3.1)
 
             newCenter.location.lat = res[0].lat
             newCenter.location.long = res[0].lon
@@ -65,8 +67,9 @@ export const addCenter = async (center, callback) => {
             const center = new Center(newCenter)
 
             try {
+                console.log(3.2)
                 let savedCenter = center.save().then((data) => {
-                    //console.log(savedCenter, data)
+                    console.log(savedCenter, data)
                     callback(data)
                 })
             } catch (e) {
@@ -91,7 +94,7 @@ export const processCenters = async (req, callback) => {
         let doc = [];
 
         if (!districtData) {
-            //var center = req.body.sessions[0]
+            var center = req.body.sessions[0]
             var newDistrict = {
                 district_id: req.query.district_id,
                 district_name: center.district_name,
@@ -118,14 +121,13 @@ export const processCenters = async (req, callback) => {
             if (req.body.sessions[0]) {
                 await req.body.sessions.forEach((center, idx) => {
 
-                    addCenter(center)
-                        .then((newCenter) => {
-                            console.log("newCenter1", newCenter)
-                            if (newCenter != null) {
-                                doc = [...doc, newCenter]
-                                districtData.centers = doc
-                            }
-                        })
+                    addCenter(center, (newCenter) => {
+                        console.log("newCenter1", newCenter)
+                        if (newCenter != null) {
+                            doc = [...doc, newCenter]
+                            districtData.centers = doc
+                        }
+                    })
                         .catch((err) => {
                             console.log(err)
                         })
@@ -209,7 +211,7 @@ export const getLocationByDistrict = async (req, res) => {
             console.log(districtData)
             if (districtData) {
                 const id = districtData._id
-                await District.findByIdAndUpdate(id, districtData, function (err, result) {
+                await District.findByIdAndUpdate(id, districtData).then(function (err, result) {
                     if (err) {
                         res.send(err)
                     }

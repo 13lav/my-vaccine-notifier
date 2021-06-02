@@ -33,18 +33,62 @@ const centerSchema = new mongoose.Schema({
         type: String,
         required: true,
     },
-    location: {
-        lat: {
-            type: Number,
-            minimum: 8.06,
-            maximum: 37.1
-        },
-        lng: {
-            type: Number,
-            minimum: 68.11,
-            maximum: 97.41
-        },
+    lat: {
+        type: Number,
+        minimum: 8.06,
+        maximum: 37.1
     },
+    long: {
+        type: Number,
+        minimum: 68.11,
+        maximum: 97.41
+    },
+    fee_type: {
+        type: String,
+        required: true,
+    },
+    vaccine: {
+        type: String,
+        required: true,
+    },
+    min_age_limit: {
+        type: Number,
+    },
+    sessions: [
+        {
+            session_id: {
+                type: String($uuid),
+                required: true,
+            },
+            date: {
+                type: String,
+                required: true,
+            },
+            available_capacity: {
+                type: Number,
+            },
+            min_age_limit: {
+                type: Number,
+            },
+            vaccine: {
+                type: String,
+                required: true,
+            },
+            available_capacity_dose1: {
+                type: Number,
+            },
+            available_capacity_dose2: {
+                type: Number,
+            },
+        }
+    ],
+    users: [
+        {
+            type: mongoose.SchemaTypes.ObjectId,
+            required: true,
+            ref: 'User'
+        },
+    ]
 }, { timestamps: true });
 
 const Center = mongoose.model('Center', centerSchema);

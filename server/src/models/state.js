@@ -13,7 +13,13 @@ const stateSchema = new mongoose.Schema({
         minLength: 1,
         required: true
     },
-    Districts: [District.schema],
+    Districts: [
+        {
+            type: mongoose.SchemaTypes.ObjectId,
+            required: true,
+            ref: 'District'
+        },
+    ],
 }, { timestamps: true });
 
 const State = mongoose.model('State', stateSchema);

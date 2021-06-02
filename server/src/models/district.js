@@ -22,7 +22,13 @@ const districtSchema = new mongoose.Schema({
         minLength: 1,
         required: true
     },
-    centers: [Center.schema],
+    centers: [
+        {
+            type: mongoose.SchemaTypes.ObjectId,
+            required: true,
+            ref: 'Center'
+        },
+    ],
 }, { timestamps: true });
 
 const District = mongoose.model('District', districtSchema);
