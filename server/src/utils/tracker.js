@@ -1,6 +1,8 @@
-import states from '../../data/states'
+import fetch from 'node-fetch';
+import states from '../../metaData/states.js'
+import { updateTrackerDB } from '../controllers/center.js'
 
-const centers = [];
+var centers = [];
 
 const getCenters = async (id) => {
     var today = new Date();
@@ -25,34 +27,44 @@ const getCenters = async (id) => {
     }
 }
 
-const getByState = async (states) => {
-    await states.forEach(async (state) => {
+const getByState = async (states, callback) => {
+    //await states.forEach(async (state) => {
+    try {
+        await states[8].districts.forEach(async (district) => {
+            await getCenters(district.district_id).then(async (data) => {
+                try {
+                    //console.log(district.district_id, '  centers - ', data.centers.length)
+                    await data.centers.forEach((center) => {
+                        centers = [...centers, center]
+                    })
+                } catch (err) {
+                    console.log(err)
+                }
+            })
+            callback()
+            centers = []
+        })
+    } catch (err) {
+        console.log(err)
+    }
+    //})
+}
+
+const tracker = (seconds) => {
+    async function callAgain() {
+        console.log('Called')
+        centers = [];   //clear centers list
         try {
-            await state.districts.forEach(async (district) => {
-                await getCenters(district.district_id).then(async (data) => {
-                    try {
-                        console.log(district.district_id, data.centers)
-                        await data.centers.forEach((session) => {
-                            centers = [...centers, session]
-                        })
-                    } catch (err) {
-                        console.log(err)
-                    }
-                })
+            await getByState(states, () => {
+                //console.log('db called')
+                updateTrackerDB(centers)
             })
         } catch (err) {
             console.log(err)
         }
-    })
-}
-
-const tracker = (seconds) => {
-    function callAgain() {
-        getByState(states).then(() => {
-            //send to controller
-        })
         setTimeout(callAgain, 1000 * seconds);
     }
+
     callAgain();
 }
 

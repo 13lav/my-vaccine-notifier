@@ -1,8 +1,8 @@
 import mongoose from 'mongoose';
 
-// schema for center
+// schema for tracker
 
-const centerSchema = new mongoose.Schema({
+export const trackerSchema = new mongoose.Schema({
     center_id: {
         type: Number,
         required: true
@@ -43,13 +43,6 @@ const centerSchema = new mongoose.Schema({
         type: String,
         required: true,
     },
-    vaccine: {
-        type: String,
-        required: true,
-    },
-    min_age_limit: {
-        type: Number,
-    },
     sessions: [
         {
             session_id: {
@@ -77,16 +70,9 @@ const centerSchema = new mongoose.Schema({
                 type: Number,
             },
         }
-    ],
-    users: [
-        {
-            type: mongoose.SchemaTypes.ObjectId,
-            required: true,
-            ref: 'User'
-        },
     ]
-}, { timestamps: true });
+}, { timestamps: true }, { strict: false });
 
-const Center = mongoose.model('Center', centerSchema);
+const Tracker = mongoose.model('Tracker', trackerSchema);
 
-export default Center;
+export default Tracker;

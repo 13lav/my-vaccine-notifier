@@ -6,6 +6,7 @@ import { config } from './config/config.js';
 import bodyParser from 'body-parser';
 
 import locationRoutes from './routers/location.js';
+import tracker from './utils/tracker.js';
 
 const app = express();
 app.use(cors());
@@ -33,6 +34,8 @@ const connect = async (url) => {
 
 export const start = async () => {
     await connect(config.DB_URL);
+
+    tracker(60);
 
     app.listen(config.PORT, () => {
         console.log(`Server has started on port ${config.PORT}...`);
