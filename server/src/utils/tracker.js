@@ -16,7 +16,11 @@ const getCenters = async (id) => {
         let response = await fetch(`https://cdn-api.co-vin.in/api/v2/appointment/sessions/public/calendarByDistrict?district_id=${id}&date=${today}`, {
             method: 'GET',
             headers: {
-                'Content-Type': 'application/json'
+                'Content-Type': 'application/json',
+                'User-Agent': 'PostmanRuntime/7.26.8',
+                'Accept': '*/*',
+                'Accept-Encoding': 'gzip, deflate, br',
+                'Connection': 'keep-alive',
             },
         })
         let res = await response.json()

@@ -9,9 +9,11 @@ export const userSchema = new mongoose.Schema({
         type: String,
         required: true,
     },
-    centers: {
-        type: mongoose.SchemaTypes.ObjectId,
-    },
+    centers: [
+        {
+            type: Number,
+        }
+    ],
 }, { timestamps: true });
 
 const User = mongoose.model('User', userSchema);

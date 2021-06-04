@@ -6,16 +6,16 @@ const sendMail = (recipient, content) => {
     let transport = nodemailer.createTransport({
         service: 'gmail',
         auth: {
-            user: 'cowinnearby@gmail.com',
+            user: 'vaccine@cowinnearby@gmail.com',
             pass: 'kqocoditzlouozip' // naturally, replace both with your real credentials or an application-specific password
         }
     });
 
     const message = {
         from: 'cowinnearby@gmail.com', // Sender address
-        to: recipient,         // List of recipients
+        to: recipient.email,         // List of recipients
         subject: 'Your Vaccine is Available', // Subject line
-        html: `<h5>${content}</h5>`
+        html: `<h1>${recipient.name}</h1><h5>${content}</h5>`
     };
 
     transport.sendMail(message, function (err, info) {

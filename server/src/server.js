@@ -6,6 +6,8 @@ import { config } from './config/config.js';
 import bodyParser from 'body-parser';
 
 import locationRoutes from './routers/location.js';
+import centerRoutes from './routers/center.js';
+import userRoutes from './routers/user.js';
 import tracker from './utils/tracker.js';
 
 const app = express();
@@ -16,6 +18,8 @@ app.use(bodyParser.json());
 
 //app.use('/api', authRoutes);
 app.use('/api/location', locationRoutes);
+app.use('/api/user', userRoutes);
+app.use('/api/centers', centerRoutes);
 
 const connect = async (url) => {
     await mongoose.connect(
