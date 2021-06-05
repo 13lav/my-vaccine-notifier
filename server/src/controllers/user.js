@@ -11,7 +11,6 @@ export const addToMailer = (user) => {
                         Mailer.create({ ...newMailer }, function (err, doc) {
                             if (err) {
                                 console.error(err)
-                                res.status(400).end();
                             }
                         });
 
@@ -26,7 +25,7 @@ export const addToMailer = (user) => {
     })
 }
 
-export const addUser = model => (req, res) => {
+export const addUser = (req, res) => {
     try {
         User.create({ ...req.body.data }, function (err, doc) {
             if (err) {

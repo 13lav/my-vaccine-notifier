@@ -6,7 +6,7 @@ const sendMail = (recipient, content) => {
     let transport = nodemailer.createTransport({
         service: 'gmail',
         auth: {
-            user: 'vaccine@cowinnearby@gmail.com',
+            user: 'cowinnearby@gmail.com',
             pass: 'kqocoditzlouozip' // naturally, replace both with your real credentials or an application-specific password
         }
     });

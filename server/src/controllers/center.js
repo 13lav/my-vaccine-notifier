@@ -58,7 +58,7 @@ const getNewSessions = (center, mailer) => {
                 if (mailer) {
                     mailer.users.forEach((id) => {
                         try {
-                            User.find(id, function (err, doc) {
+                            User.findById(id, function (err, doc) {
                                 if (err)
                                     console.log(err)
                                 if (doc)
