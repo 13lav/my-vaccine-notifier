@@ -56,7 +56,8 @@ const getByState = async (states, callback) => {
 
 const tracker = (seconds) => {
     async function callAgain() {
-        console.log('Called')
+        var now = new Date();
+        console.log('Called at - ', now.toLocaleString(undefined, { timeZone: 'Asia/Kolkata' }))
         centers = [];   //clear centers list
         try {
             await getByState(states, () => {
