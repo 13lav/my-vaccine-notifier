@@ -43,13 +43,13 @@ const centerSchema = new mongoose.Schema({
         type: String,
         required: true,
     },
-    // vaccine: {
-    //     type: String,
-    //     required: true,
-    // },
-    // min_age_limit: {
-    //     type: Number,
-    // },
+    vaccine: {
+        type: String,
+        required: true,
+    },
+    min_age_limit: {
+        type: Number,
+    },
     // sessions: [
     //     {
     //         session_id: {

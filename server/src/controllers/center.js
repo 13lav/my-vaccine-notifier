@@ -19,6 +19,8 @@ const addCenter = (center) => {
         lat: center.lat,
         long: center.long,
         fee_type: center.fee_type,
+        vaccine: center.sessions[0].vaccine,
+        min_age_limit: center.sessions[0].min_age_limit,
     }
     try {
         Center.findByIdAndUpdate(center.center_id, newCenter, { upsert: true, new: true }, function (err, doc) {
