@@ -12,11 +12,12 @@ import states from "../metaData/states"
 import Modal from '@material-ui/core/Modal';
 import Grid from '@material-ui/core/Grid';
 import Table from '@material-ui/core/Table';
+import TableContainer from '@material-ui/core/TableContainer';
 import TableBody from '@material-ui/core/TableBody';
 import TableCell from '@material-ui/core/TableCell';
 import TableHead from '@material-ui/core/TableHead';
 import TableRow from '@material-ui/core/TableRow';
-import List from '@material-ui/core/List';
+import Paper from '@material-ui/core/Paper';
 import Chip from '@material-ui/core/Chip';
 
 import ByDistrict from './ByDistrict';
@@ -75,6 +76,11 @@ const useStyles = makeStyles((theme) => ({
         marginTop: '3.5vh',
         height: 'fit-content',
         borderRadius: '12px'
+    },
+    title: {
+        flexGrow: 1,
+        textAlign: 'center',
+        marginTop: '10vh'
     },
 }));
 
@@ -365,29 +371,44 @@ export default function Cowin() {
                     <User postUser={postData} />
                 </Modal>
             </div>
-            <List>
-                {centers.filter(nextCenter => nextCenter.address.toLowerCase().includes(filterText.toLowerCase()) ||
-                    nextCenter.name.toLowerCase().includes(filterText.toLowerCase()))
-                    .filter(item =>
-                        item.vaccine.includes(covaxin) && item.vaccine.includes(covishield) &&
-                        item.vaccine.includes(sputnik))
-                    .filter(data =>
-                        data.fee_type.includes(free) && data.fee_type.includes(paid))
-                    .filter(obj =>
-                        obj.min_age_limit > minAge && obj.min_age_limit < maxAge)
-                    .map((center, idx) => {
-                        return <TableRow key={center.id}>
-                            <TableCell>{center.name}</TableCell>
-                            <TableCell className={classes.address} >{center.address}</TableCell>
-                            <TableCell align="right">{center.vaccine}</TableCell>
-                            <TableCell align="right">{center.min_age_limit}</TableCell>
-                            <TableCell align="right">{center.fee_type}</TableCell>
-                            <TableCell>
-                                {list.includes(center._id) ? <Button color="secondary" onClick={() => { addToList(center._id) }} >Remove</Button> : <Button color="primary" onClick={() => { addToList(center._id) }} >Add</Button>}</TableCell>
+            <TableContainer component={Paper}>
+                <Table className={classes.table} aria-label="simple table">
+                    <TableHead>
+                        <TableRow>
+                            <TableCell>Center Name</TableCell>
+                            <TableCell>Address</TableCell>
+                            <TableCell align="right">Vaccine</TableCell>
+                            <TableCell align="right">Age</TableCell>
+                            <TableCell align="right">Fee</TableCell>
+                            <TableCell align="center">Action</TableCell>
                         </TableRow>
-                    })
-                }
-            </List>
+                    </TableHead>
+                    <TableBody>
+                        {centers.filter(nextCenter => nextCenter.address.toLowerCase().includes(filterText.toLowerCase()) ||
+                            nextCenter.name.toLowerCase().includes(filterText.toLowerCase()))
+                            .filter(item =>
+                                item.vaccine.includes(covaxin) && item.vaccine.includes(covishield) &&
+                                item.vaccine.includes(sputnik))
+                            .filter(data =>
+                                data.fee_type.includes(free) && data.fee_type.includes(paid))
+                            .filter(obj =>
+                                obj.min_age_limit > minAge && obj.min_age_limit < maxAge)
+                            .map((center, idx) => {
+                                return <TableRow key={center.id}>
+                                    <TableCell>{center.name}</TableCell>
+                                    <TableCell className={classes.address} >{center.address}</TableCell>
+                                    <TableCell align="right">{center.vaccine}</TableCell>
+                                    <TableCell align="right">{center.min_age_limit}</TableCell>
+                                    <TableCell align="right">{center.fee_type}</TableCell>
+                                    <TableCell>
+                                        {list.includes(center._id) ? <Button color="secondary" onClick={() => { addToList(center._id) }} >Remove</Button> : <Button color="primary" onClick={() => { addToList(center._id) }} >Add</Button>}</TableCell>
+                                </TableRow>
+                            })
+                        }
+                    </TableBody>
+                </Table>
+                {centers.length === 0 ? <Typography variant="h5" className={classes.title} > No Centers Available </Typography> : <div></div>}
+            </TableContainer>
         </Container >
     );
 }
