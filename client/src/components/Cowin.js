@@ -73,7 +73,8 @@ const useStyles = makeStyles((theme) => ({
     button: {
         marginRight: '1vw',
         marginTop: '3.5vh',
-        height: 'fit-content'
+        height: 'fit-content',
+        borderRadius: '12px'
     },
 }));
 
@@ -91,6 +92,9 @@ export default function Cowin() {
     const [sputnik, setSputnik] = useState('');
     const [age18, setAge18] = useState('');
     const [age45, setAge45] = useState('');
+    const [age, setAge] = useState(0);
+    const [minAge, setMinAge] = useState(0);
+    const [maxAge, setMaxAge] = useState(60);
     const [free, setFree] = useState('');
     const [paid, setPaid] = useState('');
 
@@ -198,15 +202,19 @@ export default function Cowin() {
                         <Chip
                             size="medium"
                             label="18+"
-                            color={(age18) ? "primary" : ""}
+                            color={(age === 18) ? "primary" : ""}
                             className={classes.chip}
                             onClick={
                                 () => {
-                                    if (age18)
-                                        setAge18('')
+                                    if (age === 18) {
+                                        setAge(0)
+                                        setMinAge(0)
+                                        setMaxAge(60)
+                                    }
                                     else {
-                                        setAge45('')
-                                        setAge18('18')
+                                        setAge(18)
+                                        setMinAge(0)
+                                        setMaxAge(30)
                                     }
                                 }
                             }
@@ -216,15 +224,19 @@ export default function Cowin() {
                         <Chip
                             size="medium"
                             label="45+"
-                            color={(age45) ? "primary" : ""}
+                            color={(age === 45) ? "primary" : ""}
                             className={classes.chip}
                             onClick={
                                 () => {
-                                    if (age45)
-                                        setAge45('')
+                                    if (age === 45) {
+                                        setAge(0)
+                                        setMinAge(0)
+                                        setMaxAge(60)
+                                    }
                                     else {
-                                        setAge45('45')
-                                        setAge18('')
+                                        setAge(45)
+                                        setMinAge(30)
+                                        setMaxAge(60)
                                     }
                                 }
                             }
@@ -343,190 +355,6 @@ export default function Cowin() {
                             Select All
                     </Button>
                     </Grid>
-                    {/* <Grid item xs={12} sm={4}>
-                        <Grid container spacing={2} className={classes.container} >
-                            <Grid item xs={12} sm={4}>
-                                <Button
-                                    type="submit"
-                                    variant="contained"
-                                    color="secondary"
-                                    className={classes.submit}
-                                    onClick={resetList}
-                                >
-                                    Reset
-                                </Button>
-                            </Grid>
-                            <Grid item xs={12} sm={4}>
-                                <Button
-                                    type="submit"
-                                    variant="contained"
-                                    color="secondary"
-                                    className={classes.submit}
-                                    onClick={addAll}
-                                >
-                                    Add All
-                                </Button>
-                            </Grid>
-                            <Grid item xs={12} sm={4}>
-                                <Button
-                                    type="submit"
-                                    variant="contained"
-                                    color="primary"
-                                    className={classes.submit}
-                                    onClick={handleOpen}
-                                >
-                                    Notify Me
-                                </Button>
-                            </Grid>
-                        </Grid>
-                    </Grid> */}
-                    {/* <Grid item xs={12} sm={6}>
-                        <Grid container spacing={0} className={classes.filters} >
-                            <Grid item xs={12} sm={1}>
-                                <div></div>
-                            </Grid>
-                            <Grid item xs={12} sm={1}>
-                                <Chip
-                                    size="medium"
-                                    label="18+"
-                                    color={(age18) ? "primary" : ""}
-                                    className={classes.chip}
-                                    onClick={
-                                        () => {
-                                            if (age18)
-                                                setAge18('')
-                                            else {
-                                                setAge45('')
-                                                setAge18('18')
-                                            }
-                                        }
-                                    }
-                                />
-                            </Grid>
-                            <Grid item xs={12} sm={1}>
-                                <Chip
-                                    size="medium"
-                                    label="45+"
-                                    color={(age45) ? "primary" : ""}
-                                    className={classes.chip}
-                                    onClick={
-                                        () => {
-                                            if (age45)
-                                                setAge45('')
-                                            else {
-                                                setAge45('45')
-                                                setAge18('')
-                                            }
-                                        }
-                                    }
-                                />
-                            </Grid>
-                            <Grid item xs={12} sm={2}>
-                                <Chip
-                                    size="medium"
-                                    label="COVAXIN"
-                                    color={(covaxin) ? "primary" : ""}
-                                    className={classes.chip}
-                                    onClick={
-                                        () => {
-                                            if (covaxin)
-                                                setCovaxin('')
-                                            else {
-                                                setCovaxin('COVAXIN')
-                                                setCovishield('')
-                                                setSputnik('')
-                                            }
-                                        }
-                                    }
-                                />
-                            </Grid>
-                            <Grid item xs={12} sm={2}>
-                                <Chip
-                                    size="medium"
-                                    label="COVISHIELD"
-                                    color={(covishield) ? "primary" : ""}
-                                    className={classes.chip}
-                                    onClick={
-                                        () => {
-                                            if (covishield)
-                                                setCovishield('')
-                                            else {
-                                                setCovaxin('')
-                                                setCovishield('COVISHIELD')
-                                                setSputnik('')
-                                            }
-                                        }
-                                    }
-                                />
-                            </Grid>
-                            <Grid item xs={12} sm={2}>
-                                <Chip
-                                    size="medium"
-                                    label="SPUTNIK"
-                                    color={(sputnik) ? "primary" : ""}
-                                    className={classes.chip}
-                                    onClick={
-                                        () => {
-                                            if (sputnik)
-                                                setSputnik('')
-                                            else {
-                                                setCovaxin('')
-                                                setCovishield('')
-                                                setSputnik('SPUTNIK')
-                                            }
-                                        }
-                                    }
-                                />
-                            </Grid>
-                            <Grid item xs={12} sm={1}>
-                                <Chip
-                                    size="medium"
-                                    label="FREE"
-                                    color={(free) ? "primary" : ""}
-                                    className={classes.chip}
-                                    onClick={
-                                        () => {
-                                            if (free)
-                                                setFree('')
-                                            else {
-                                                setFree('Free')
-                                                setPaid('')
-                                            }
-                                        }
-                                    }
-                                />
-                            </Grid>
-                            <Grid item xs={12} sm={1}>
-                                <Chip
-                                    size="medium"
-                                    label="PAID"
-                                    color={(paid) ? "primary" : ""}
-                                    className={classes.chip}
-                                    onClick={
-                                        () => {
-                                            if (paid)
-                                                setPaid('')
-                                            else {
-                                                setFree('')
-                                                setPaid('Paid')
-                                            }
-                                        }
-                                    }
-                                />
-                            </Grid>
-                        </Grid>
-                    </Grid>
-                    <Grid item xs={12} sm={2}>
-                        <Button
-                            type="submit"
-                            variant="contained"
-                            color="secondary"
-                            className={classes.submit}
-                            onClick={addAll}
-                        >
-                            Select All
-                        </Button>
-                    </Grid> */}
                 </Grid>
                 <Modal
                     open={open}
@@ -541,28 +369,25 @@ export default function Cowin() {
                 {centers.filter(nextCenter => nextCenter.address.toLowerCase().includes(filterText.toLowerCase()) ||
                     nextCenter.name.toLowerCase().includes(filterText.toLowerCase()))
                     .filter(item =>
-                        item.vaccine.includes(covaxin) && item.vaccine.includes(covishield) && item.vaccine.includes(sputnik)).map((center, idx) => {
-                            return <TableRow key={center.id}>
-                                <TableCell>{center.name}</TableCell>
-                                <TableCell className={classes.address} >{center.address}</TableCell>
-                                <TableCell align="right">{center.vaccine}</TableCell>
-                                <TableCell align="right">{center.min_age_limit}</TableCell>
-                                <TableCell align="right">{center.fee_type}</TableCell>
-                                <TableCell>
-                                    {list.includes(center._id) ? <Button color="secondary" onClick={() => { addToList(center._id) }} >Remove</Button> : <Button color="primary" onClick={() => { addToList(center._id) }} >Add</Button>}</TableCell>
-                            </TableRow>
-                        })
+                        item.vaccine.includes(covaxin) && item.vaccine.includes(covishield) &&
+                        item.vaccine.includes(sputnik))
+                    .filter(data =>
+                        data.fee_type.includes(free) && data.fee_type.includes(paid))
+                    .filter(obj =>
+                        obj.min_age_limit > minAge && obj.min_age_limit < maxAge)
+                    .map((center, idx) => {
+                        return <TableRow key={center.id}>
+                            <TableCell>{center.name}</TableCell>
+                            <TableCell className={classes.address} >{center.address}</TableCell>
+                            <TableCell align="right">{center.vaccine}</TableCell>
+                            <TableCell align="right">{center.min_age_limit}</TableCell>
+                            <TableCell align="right">{center.fee_type}</TableCell>
+                            <TableCell>
+                                {list.includes(center._id) ? <Button color="secondary" onClick={() => { addToList(center._id) }} >Remove</Button> : <Button color="primary" onClick={() => { addToList(center._id) }} >Add</Button>}</TableCell>
+                        </TableRow>
+                    })
                 }
             </List>
         </Container >
     );
 }
-
-/***
- *
- ) &&
-                        item.vaccine.includes(age18) &&
-                        item.vaccine.includes(age45) &&
-                        item.vaccine.includes(free) &&
-                        item.vaccine.includes(paid
- */
