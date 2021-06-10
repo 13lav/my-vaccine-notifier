@@ -27,9 +27,9 @@ export default function MenuTabs(props) {
                 textColor="primary"
                 centered
             >
-                <Tab label="Search By District" />
-                <Tab label="Search By PIN" />
-                <Tab label="Search By Location" />
+                <Tab label="By District" />
+                <Tab label="By PIN" />
+                <Tab label="By Location" />
             </Tabs>
         </Paper>
     );
