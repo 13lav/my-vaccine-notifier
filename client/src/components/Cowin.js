@@ -80,7 +80,8 @@ const useStyles = makeStyles((theme) => ({
     title: {
         flexGrow: 1,
         textAlign: 'center',
-        marginTop: '10vh'
+        marginTop: '10vh',
+        marginBottom: '10vh'
     },
 }));
 
