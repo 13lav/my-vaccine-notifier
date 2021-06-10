@@ -31,7 +31,10 @@ const useStyles = makeStyles((theme) => ({
         display: 'flex',
         flexDirection: 'column',
         alignItems: 'center',
-        width: '50%'
+        width: '50%',
+        [theme.breakpoints.down('sm')]: {
+            width: '100%',
+        },
     },
     avatar: {
         margin: theme.spacing(1),
@@ -57,6 +60,20 @@ const useStyles = makeStyles((theme) => ({
     },
     address: {
         width: '48vw'
+    },
+    filters: {
+        padding: '28px',
+        paddingLeft: '0px',
+        paddingRight: '0px',
+    },
+    chip: {
+        marginRight: '1vw',
+        marginTop: '4vh'
+    },
+    button: {
+        marginRight: '1vw',
+        marginTop: '3.5vh',
+        height: 'fit-content'
     },
 }));
 
@@ -159,15 +176,12 @@ export default function Cowin() {
         <Container component="main" >
             <CssBaseline />
             <div className={classes.paper}>
-                <Typography component="h1" variant="h5">
-                    CoWin NearBy
-                </Typography>
                 <Tabs value={tab} setValue={setTab} />
                 {getContent(tab)}
             </div>
             <div>
-                <Grid container spacing={2} className={classes.container} >
-                    <Grid item xs={12} sm={4}>
+                <Grid container spacing={2} >
+                    <Grid item xs={12} sm={3} >
                         <TextField
                             variant="outlined"
                             margin="normal"
@@ -179,6 +193,155 @@ export default function Cowin() {
                             onChange={handleFilter}
                             value={filterText}
                         />
+                    </Grid>
+                    <Grid item xs={12} sm={6}>
+                        <Chip
+                            size="medium"
+                            label="18+"
+                            color={(age18) ? "primary" : ""}
+                            className={classes.chip}
+                            onClick={
+                                () => {
+                                    if (age18)
+                                        setAge18('')
+                                    else {
+                                        setAge45('')
+                                        setAge18('18')
+                                    }
+                                }
+                            }
+                        />
+
+
+                        <Chip
+                            size="medium"
+                            label="45+"
+                            color={(age45) ? "primary" : ""}
+                            className={classes.chip}
+                            onClick={
+                                () => {
+                                    if (age45)
+                                        setAge45('')
+                                    else {
+                                        setAge45('45')
+                                        setAge18('')
+                                    }
+                                }
+                            }
+                        />
+
+
+                        <Chip
+                            size="medium"
+                            label="COVAXIN"
+                            color={(covaxin) ? "primary" : ""}
+                            className={classes.chip}
+                            onClick={
+                                () => {
+                                    if (covaxin)
+                                        setCovaxin('')
+                                    else {
+                                        setCovaxin('COVAXIN')
+                                        setCovishield('')
+                                        setSputnik('')
+                                    }
+                                }
+                            }
+                        />
+
+
+                        <Chip
+                            size="medium"
+                            label="COVISHIELD"
+                            color={(covishield) ? "primary" : ""}
+                            className={classes.chip}
+                            onClick={
+                                () => {
+                                    if (covishield)
+                                        setCovishield('')
+                                    else {
+                                        setCovaxin('')
+                                        setCovishield('COVISHIELD')
+                                        setSputnik('')
+                                    }
+                                }
+                            }
+                        />
+
+
+                        <Chip
+                            size="medium"
+                            label="SPUTNIK"
+                            color={(sputnik) ? "primary" : ""}
+                            className={classes.chip}
+                            onClick={
+                                () => {
+                                    if (sputnik)
+                                        setSputnik('')
+                                    else {
+                                        setCovaxin('')
+                                        setCovishield('')
+                                        setSputnik('SPUTNIK')
+                                    }
+                                }
+                            }
+                        />
+
+
+                        <Chip
+                            size="medium"
+                            label="FREE"
+                            color={(free) ? "primary" : ""}
+                            className={classes.chip}
+                            onClick={
+                                () => {
+                                    if (free)
+                                        setFree('')
+                                    else {
+                                        setFree('Free')
+                                        setPaid('')
+                                    }
+                                }
+                            }
+                        />
+
+
+                        <Chip
+                            size="medium"
+                            label="PAID"
+                            color={(paid) ? "primary" : ""}
+                            className={classes.chip}
+                            onClick={
+                                () => {
+                                    if (paid)
+                                        setPaid('')
+                                    else {
+                                        setFree('')
+                                        setPaid('Paid')
+                                    }
+                                }
+                            }
+                        />
+                    </Grid>
+                    <Grid item xs={12} sm={3}>
+                        <Button
+                            type="submit"
+                            variant="contained"
+                            color="secondary"
+                            className={classes.button}
+                            onClick={resetList}
+                        >
+                            Remove All
+                    </Button>
+                        <Button
+                            type="submit"
+                            variant="contained"
+                            color="secondary"
+                            className={classes.button}
+                            onClick={addAll}
+                        >
+                            Select All
+                    </Button>
                     </Grid>
                     {/* <Grid item xs={12} sm={4}>
                         <Grid container spacing={2} className={classes.container} >
@@ -217,11 +380,14 @@ export default function Cowin() {
                             </Grid>
                         </Grid>
                     </Grid> */}
-                    <Grid item xs={12} sm={8}>
-                        <Grid container spacing={1} className={classes.container} >
+                    {/* <Grid item xs={12} sm={6}>
+                        <Grid container spacing={0} className={classes.filters} >
+                            <Grid item xs={12} sm={1}>
+                                <div></div>
+                            </Grid>
                             <Grid item xs={12} sm={1}>
                                 <Chip
-                                    size="large"
+                                    size="medium"
                                     label="18+"
                                     color={(age18) ? "primary" : ""}
                                     className={classes.chip}
@@ -239,7 +405,7 @@ export default function Cowin() {
                             </Grid>
                             <Grid item xs={12} sm={1}>
                                 <Chip
-                                    size="large"
+                                    size="medium"
                                     label="45+"
                                     color={(age45) ? "primary" : ""}
                                     className={classes.chip}
@@ -257,7 +423,7 @@ export default function Cowin() {
                             </Grid>
                             <Grid item xs={12} sm={2}>
                                 <Chip
-                                    size="large"
+                                    size="medium"
                                     label="COVAXIN"
                                     color={(covaxin) ? "primary" : ""}
                                     className={classes.chip}
@@ -276,7 +442,7 @@ export default function Cowin() {
                             </Grid>
                             <Grid item xs={12} sm={2}>
                                 <Chip
-                                    size="large"
+                                    size="medium"
                                     label="COVISHIELD"
                                     color={(covishield) ? "primary" : ""}
                                     className={classes.chip}
@@ -295,7 +461,7 @@ export default function Cowin() {
                             </Grid>
                             <Grid item xs={12} sm={2}>
                                 <Chip
-                                    size="large"
+                                    size="medium"
                                     label="SPUTNIK"
                                     color={(sputnik) ? "primary" : ""}
                                     className={classes.chip}
@@ -312,9 +478,9 @@ export default function Cowin() {
                                     }
                                 />
                             </Grid>
-                            <Grid item xs={12} sm={2}>
+                            <Grid item xs={12} sm={1}>
                                 <Chip
-                                    size="large"
+                                    size="medium"
                                     label="FREE"
                                     color={(free) ? "primary" : ""}
                                     className={classes.chip}
@@ -330,9 +496,9 @@ export default function Cowin() {
                                     }
                                 />
                             </Grid>
-                            <Grid item xs={12} sm={2}>
+                            <Grid item xs={12} sm={1}>
                                 <Chip
-                                    size="large"
+                                    size="medium"
                                     label="PAID"
                                     color={(paid) ? "primary" : ""}
                                     className={classes.chip}
@@ -350,6 +516,17 @@ export default function Cowin() {
                             </Grid>
                         </Grid>
                     </Grid>
+                    <Grid item xs={12} sm={2}>
+                        <Button
+                            type="submit"
+                            variant="contained"
+                            color="secondary"
+                            className={classes.submit}
+                            onClick={addAll}
+                        >
+                            Select All
+                        </Button>
+                    </Grid> */}
                 </Grid>
                 <Modal
                     open={open}

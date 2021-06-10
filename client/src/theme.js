@@ -19,6 +19,7 @@ const theme = createMuiTheme({
         useNextVariants: true,
         fontFamily: '"Signika Negative", sans-serif',
     },
+    shadows: ["none"]
 })
 
 export default theme 
