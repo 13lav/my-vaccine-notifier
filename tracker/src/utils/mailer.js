@@ -1,5 +1,5 @@
 import nodemailer from 'nodemailer';
-import { config } from '../config/config.js';
+//import { config } from '../config/config.js';
 
 const sendMail = (recipient, content) => {
 

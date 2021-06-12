@@ -7,7 +7,6 @@ import Container from '@material-ui/core/Container';
 import TextField from '@material-ui/core/TextField';
 import User from './User';
 import Tabs from './Tabs';
-import states from "../metaData/states"
 
 import Modal from '@material-ui/core/Modal';
 import Grid from '@material-ui/core/Grid';
@@ -28,7 +27,7 @@ const useStyles = makeStyles((theme) => ({
     paper: {
         margin: 'auto',
         marginTop: theme.spacing(4),
-        marginBottom: theme.spacing(4),
+        marginBottom: theme.spacing(1),
         display: 'flex',
         flexDirection: 'column',
         alignItems: 'center',
@@ -57,7 +56,7 @@ const useStyles = makeStyles((theme) => ({
         backgroundColor: theme.palette.background.paper,
         border: '2px solid #000',
         boxShadow: theme.shadows[5],
-        padding: theme.spacing(2, 4, 3),
+        padding: theme.spacing(1, 4, 1),
     },
     address: {
         width: '48vw'
@@ -83,6 +82,9 @@ const useStyles = makeStyles((theme) => ({
         marginTop: '10vh',
         marginBottom: '10vh'
     },
+    notify: {
+        width: '100%'
+    }
 }));
 
 export default function Cowin() {
@@ -97,8 +99,6 @@ export default function Cowin() {
     const [covaxin, setCovaxin] = useState('');
     const [covishield, setCovishield] = useState('');
     const [sputnik, setSputnik] = useState('');
-    const [age18, setAge18] = useState('');
-    const [age45, setAge45] = useState('');
     const [age, setAge] = useState(0);
     const [minAge, setMinAge] = useState(0);
     const [maxAge, setMaxAge] = useState(60);
@@ -124,7 +124,7 @@ export default function Cowin() {
         }
 
         try {
-            let response = await fetch('http://localhost:4000/api/user/notifyme', {
+            let response = await fetch('http://192.168.1.6:4000/api/user/notifyme', {
                 method: 'POST',
                 headers: {
                     'Content-Type': 'application/json'
@@ -189,6 +189,16 @@ export default function Cowin() {
             <div className={classes.paper}>
                 <Tabs value={tab} setValue={setTab} />
                 {getContent(tab)}
+                <Button
+                    type="submit"
+                    variant="contained"
+                    color="primary"
+                    fullwidth
+                    className={classes.notify}
+                    onClick={handleOpen}
+                >
+                    Notify Me
+                </Button>
             </div>
             <div>
                 <Grid container spacing={2} >
@@ -226,8 +236,6 @@ export default function Cowin() {
                                 }
                             }
                         />
-
-
                         <Chip
                             size="medium"
                             label="45+"
@@ -248,8 +256,6 @@ export default function Cowin() {
                                 }
                             }
                         />
-
-
                         <Chip
                             size="medium"
                             label="COVAXIN"
@@ -267,8 +273,6 @@ export default function Cowin() {
                                 }
                             }
                         />
-
-
                         <Chip
                             size="medium"
                             label="COVISHIELD"
@@ -286,8 +290,6 @@ export default function Cowin() {
                                 }
                             }
                         />
-
-
                         <Chip
                             size="medium"
                             label="SPUTNIK"
@@ -305,8 +307,6 @@ export default function Cowin() {
                                 }
                             }
                         />
-
-
                         <Chip
                             size="medium"
                             label="FREE"
@@ -323,8 +323,6 @@ export default function Cowin() {
                                 }
                             }
                         />
-
-
                         <Chip
                             size="medium"
                             label="PAID"

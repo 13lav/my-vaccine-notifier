@@ -1,16 +1,10 @@
 import { React, useState } from 'react';
-import states from "../metaData/states"
 
 import { makeStyles } from '@material-ui/core/styles';
-import Grid from '@material-ui/core/Grid';
-import TextField from '@material-ui/core/TextField';
 import Button from '@material-ui/core/Button';
-import InputLabel from '@material-ui/core/InputLabel';
-import MenuItem from '@material-ui/core/MenuItem';
-import FormControl from '@material-ui/core/FormControl';
-import Select from '@material-ui/core/Select';
+import Typography from '@material-ui/core/Typography';
 
-import NewMap from './newMap';
+//import NewMap from './newMap';
 
 const useStyles = makeStyles((theme) => ({
     root: {
@@ -31,6 +25,10 @@ const useStyles = makeStyles((theme) => ({
         height: '60%',
         position: 'absolute',
         left: '1%'
+    },
+    text: {
+        flexGrow: 1,
+        margin: theme.spacing(5, 0, 4)
     },
 }));
 
@@ -78,16 +76,19 @@ const ByLocation = (props) => {
     return (
         <div className={classes.root}>
             <form className={classes.form} noValidate>
-                <Button
+                <Typography variant="h6" className={classes.text}>
+                    Coming Soon...
+                </Typography>
+                {/* <Button
                     type="submit"
                     fullWidth
                     variant="contained"
-                    color="primary"
+                    color="secondary"
                     className={classes.submit}
-                    onClick={getLocation}
+                //onClick={getLocation}
                 >
                     Get Your Location
-                </Button>
+                </Button> */}
                 {/*<div className={classes.mapContainer}>
                     <NewMap />
                 </div>*/}
@@ -95,9 +96,9 @@ const ByLocation = (props) => {
                     type="submit"
                     fullWidth
                     variant="contained"
-                    color="primary"
+                    color="secondary"
                     className={classes.submit}
-                    onClick={clickSubmit}
+                //onClick={clickSubmit}
                 >
                     Find Certers
                 </Button>

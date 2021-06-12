@@ -1,15 +1,8 @@
 import { React, useState } from 'react';
-import Avatar from '@material-ui/core/Avatar';
 import Button from '@material-ui/core/Button';
-import CssBaseline from '@material-ui/core/CssBaseline';
 import TextField from '@material-ui/core/TextField';
-import FormControlLabel from '@material-ui/core/FormControlLabel';
-import Checkbox from '@material-ui/core/Checkbox';
-import Link from '@material-ui/core/Link';
 import Paper from '@material-ui/core/Paper';
-import Grid from '@material-ui/core/Grid';
 import Container from '@material-ui/core/Container';
-// import LockOutlinedIcon from '@material-ui/icons/LockOutlined';
 import Typography from '@material-ui/core/Typography';
 import { makeStyles } from '@material-ui/core/styles';
 // import { useHistory } from "react-router-dom";
@@ -55,7 +48,7 @@ const useStyles = makeStyles((theme) => ({
     },
 }));
 
-const Login = (props) => {
+const User = (props) => {
     const classes = useStyles();
     //const history = useHistory()
 
@@ -64,56 +57,21 @@ const Login = (props) => {
         name: ''
     })
 
-    const regex = {
-        email: '^([a-z0-9_\.\+-]+)@([\da-z\.-]+)\.([a-z\.]{2,6})$',
-        password: '(?!^[0-9]*$)(?!^[a-zA-Z]*$)^([a-zA-Z0-9]{6,})$'
-    }
-
-    const [errorText, setErrorText] = useState({
-        email: '',
-        password: ''
-    })
-
-    const validateInput = (name, input) => {
-        if (name === 'email') {
-            if (!input.match(regex.email))
-                setErrorText({ ...errorText, [name]: 'Invalid Email Id' })
-            else setErrorText({ ...errorText, [name]: '' })
-        }
-        if (name === 'password') {
-            if (!input.match(regex.password))
-                setErrorText({ ...errorText, [name]: 'Password must be Alphanumeric, Min. Length 6' })
-            else setErrorText({ ...errorText, [name]: '' })
-        }
-    }
-
-
     const handleChange = name => event => {
         setValues({ ...values, [name]: event.target.value })
-        validateInput(name, event.target.value)
     }
 
     const clickSubmit = (event) => {
         event.preventDefault();
-        const user = {
-            email: values.email || undefined,
-            password: values.password || undefined
-        }
-
-        // props.loginCheck(user, function (token) {
-        //     localStorage.setItem('token', token);
-        //     //history.push("/")
-        // })
-        console.log(values)
         props.postUser(values)
     }
 
     return (
-        <Container container component="main" className={classes.root} component={Paper} elevation={6} square>
+        <Container container className={classes.root} component={Paper} elevation={6} square>
 
             <div className={classes.paper}>
                 <Typography component="h1" variant="h5">
-                    Mailing Details
+                    Notifier Details
                     </Typography>
                 <form className={classes.form} noValidate>
                     <TextField
@@ -128,7 +86,6 @@ const Login = (props) => {
                         onChange={handleChange('name')}
                         value={values.name}
                         autoComplete="current-name"
-                        error={errorText.password}
                     />
                     <TextField
                         variant="outlined"
@@ -142,7 +99,6 @@ const Login = (props) => {
                         name="email"
                         autoComplete="email"
                         autoFocus
-                        error={errorText.email}
                     />
                     <Button
                         type="submit"
@@ -151,7 +107,6 @@ const Login = (props) => {
                         color="primary"
                         className={classes.submit}
                         onClick={clickSubmit}
-                        disabled={(errorText.password || errorText.email) ? "true" : ""}
                     >
                         Set Notifier
                         </Button>
@@ -161,4 +116,4 @@ const Login = (props) => {
     );
 }
 
-export default Login;
+export default User;

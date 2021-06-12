@@ -1,9 +1,8 @@
 import { React, useState } from 'react';
-import states from "../metaData/states"
+import states from "../data/states"
 
 import { makeStyles } from '@material-ui/core/styles';
 import Grid from '@material-ui/core/Grid';
-import TextField from '@material-ui/core/TextField';
 import Button from '@material-ui/core/Button';
 import InputLabel from '@material-ui/core/InputLabel';
 import MenuItem from '@material-ui/core/MenuItem';
@@ -52,14 +51,11 @@ const ByDistrict = (props) => {
     const getByDistrict = async (district) => {
 
         try {
-            //let response = await fetch(`https://cdn-api.co-vin.in/api/v2/appointment/sessions/public/findByDistrict?district_id=${id}&date=${today}`, {
-            let response = await fetch(`http://localhost:4000/api/centers/byDistrict/${district.district_name}`, {
+            let response = await fetch(`http://192.168.1.6:4000/api/centers/byDistrict/${district.district_name}`, {
                 method: 'GET',
-                //mode: 'no-cors',
                 headers: {
                     'Content-Type': 'application/json'
                 },
-                //body: JSON.stringify(user)
             })
             let res = await response.json()
             console.log(res)
@@ -67,8 +63,6 @@ const ByDistrict = (props) => {
             return res
         } catch (err) {
             console.log(err)
-            // disIDs = [...disIDs, id]
-            // setDistricts(disIDs)
         }
     }
 
@@ -142,7 +136,7 @@ const ByDistrict = (props) => {
                     type="submit"
                     fullWidth
                     variant="contained"
-                    color="primary"
+                    color="secondary"
                     className={classes.submit}
                     onClick={clickSubmit}
                 >

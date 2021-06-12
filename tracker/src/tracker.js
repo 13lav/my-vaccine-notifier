@@ -1,6 +1,6 @@
 import fetch from 'node-fetch';
-import states from '../../metaData/states.js'
-import { updateTrackerDB } from '../controllers/center.js'
+import states from './data/states.js'
+import { updateTrackerDB } from './utils/center.js'
 
 var centers = [];
 
@@ -17,9 +17,9 @@ const getCenters = async (id) => {
             method: 'GET',
             headers: {
                 'Content-Type': 'application/json',
-                'User-Agent': 'PostmanRuntime/7.26.8',
-                'Accept': '*/*',
-                'Accept-Encoding': 'gzip, deflate, br',
+                // 'User-Agent': 'PostmanRuntime/7.26.8',
+                // 'Accept': '*/*',
+                // 'Accept-Encoding': 'gzip, deflate, br',
                 'Connection': 'keep-alive',
             },
         })
@@ -32,26 +32,26 @@ const getCenters = async (id) => {
 }
 
 const getByState = async (states, callback) => {
-    //await states.forEach(async (state) => {
-    try {
-        await states[8].districts.forEach(async (district) => {
-            await getCenters(district.district_id).then(async (data) => {
-                try {
-                    //console.log(district.district_id, '  centers - ', data.centers.length)
-                    await data.centers.forEach((center) => {
-                        centers = [...centers, center]
-                    })
-                } catch (err) {
-                    console.log(err)
-                }
+    await states.forEach(async (state) => {
+        try {
+            await state.districts.forEach(async (district) => {
+                await getCenters(district.district_id).then(async (data) => {
+                    try {
+                        //console.log(district.district_id, '  centers - ', data.centers.length)
+                        await data.centers.forEach((center) => {
+                            centers = [...centers, center]
+                        })
+                    } catch (err) {
+                        console.log(err)
+                    }
+                })
+                callback()
+                centers = []
             })
-            callback()
-            centers = []
-        })
-    } catch (err) {
-        console.log(err)
-    }
-    //})
+        } catch (err) {
+            console.log(err)
+        }
+    })
 }
 
 const tracker = (seconds) => {

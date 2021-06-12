@@ -1,14 +1,8 @@
 import { React, useState } from 'react';
-import states from "../metaData/states"
 
 import { makeStyles } from '@material-ui/core/styles';
-import Grid from '@material-ui/core/Grid';
 import TextField from '@material-ui/core/TextField';
 import Button from '@material-ui/core/Button';
-import InputLabel from '@material-ui/core/InputLabel';
-import MenuItem from '@material-ui/core/MenuItem';
-import FormControl from '@material-ui/core/FormControl';
-import Select from '@material-ui/core/Select';
 
 const useStyles = makeStyles((theme) => ({
     root: {
@@ -38,7 +32,7 @@ const ByPIN = (props) => {
     const getByPIN = async (pin) => {
 
         try {
-            let response = await fetch(`http://localhost:4000/api/centers/byPincode/${pin}`, {
+            let response = await fetch(`http://192.168.1.6:4000/api/centers/byPincode/${pin}`, {
                 method: 'GET',
                 headers: {
                     'Content-Type': 'application/json'
@@ -77,7 +71,7 @@ const ByPIN = (props) => {
                     type="submit"
                     fullWidth
                     variant="contained"
-                    color="primary"
+                    color="secondary"
                     className={classes.submit}
                     onClick={clickSubmit}
                 >
