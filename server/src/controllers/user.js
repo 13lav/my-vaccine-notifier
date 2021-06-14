@@ -1,15 +1,15 @@
-import Mailer from '../models/mailer.js';
+import Notifier from '../models/notifier.js';
 import User from '../models/user.js';
 
-export const addToMailer = (user) => {
+export const addToNotifier = (user) => {
     if (user.centers)
         user.centers.forEach((center_id) => {
-            var newMailer = { _id: center_id, users: [user._id] };
+            var newNotifier = { _id: center_id, users: [user._id] };
             try {
-                Mailer.findByIdAndUpdate(center_id, { $push: { users: user._id } }, function (err, doc) {
+                Notifier.findByIdAndUpdate(center_id, { $push: { users: user._id } }, function (err, doc) {
                     if (!doc) {
                         try {
-                            Mailer.create({ ...newMailer }, function (err, doc) {
+                            Notifier.create({ ...newNotifier }, function (err, doc) {
                                 if (err) {
                                     console.error(err)
                                 }
@@ -33,7 +33,7 @@ export const addUser = (req, res) => {
                 console.error(err)
                 res.status(400).end();
             }
-            addToMailer(doc)
+            addToNotifier(doc)
             res.status(201).json({ data: doc });
         });
 

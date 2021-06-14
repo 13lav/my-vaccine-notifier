@@ -1,6 +1,7 @@
 import mongoose from 'mongoose';
 import { config } from './config/config.js';
 import tracker from './tracker.js';
+import { sendNotificationToClient } from './notify.js';
 
 const connect = async (url) => {
     await mongoose.connect(
