@@ -119,10 +119,11 @@ export default function Cowin() {
             data: {
                 name: user.name,
                 email: user.email,
-                centers: list
+                centers: list,
+                deviceToken: user.deviceToken
             }
         }
-
+        console.log(data)
         try {
             let response = await fetch('http://192.168.1.6:4000/api/user/notifyme', {
                 method: 'POST',
@@ -367,7 +368,7 @@ export default function Cowin() {
                     aria-labelledby="simple-modal-title"
                     aria-describedby="simple-modal-description"
                 >
-                    <User postUser={postData} />
+                    <User postData={postData} />
                 </Modal>
             </div>
             <TableContainer component={Paper}>

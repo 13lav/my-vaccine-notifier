@@ -14,6 +14,9 @@ export const userSchema = new mongoose.Schema({
             type: Number,
         }
     ],
+    deviceToken: {
+        type: String,
+    }
 }, { timestamps: true });
 
 const User = mongoose.model('User', userSchema);

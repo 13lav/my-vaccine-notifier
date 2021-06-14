@@ -19,5 +19,5 @@ const connect = async (url) => {
 
 export const start = async () => {
     await connect(config.DB_URL);
-    tracker(120);
+    tracker(180);
 }

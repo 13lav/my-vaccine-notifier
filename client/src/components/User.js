@@ -5,6 +5,7 @@ import Paper from '@material-ui/core/Paper';
 import Container from '@material-ui/core/Container';
 import Typography from '@material-ui/core/Typography';
 import { makeStyles } from '@material-ui/core/styles';
+import { requestFirebaseNotificationPermission, onMessageListener } from '../firebaseInit'
 // import { useHistory } from "react-router-dom";
 // import { connect } from 'react-redux';
 // import { loginCheck } from '../redux/actionCreators';
@@ -54,8 +55,33 @@ const User = (props) => {
 
     const [values, setValues] = useState({
         email: '',
-        name: ''
+        name: '',
+        deviceToken: ''
     })
+
+    const [show, setShow] = useState(false);
+    const [notification, setNotification] = useState({ title: '', body: '' });
+    const [isTokenFound, setTokenFound] = useState(false);
+
+    const getToken = () => {
+
+        requestFirebaseNotificationPermission(setTokenFound)
+            .then((firebaseToken) => {
+                console.log('Device Token Found', firebaseToken);
+                setValues({ ...values, deviceToken: firebaseToken })
+            })
+            .catch((err) => {
+                return err;
+            });
+
+        onMessageListener().then(payload => {
+            setShow(true);
+            setNotification({ title: payload.notification.title, body: payload.notification.body })
+            console.log(payload);
+        }).catch(err => console.log('failed: ', err));
+
+
+    }
 
     const handleChange = name => event => {
         setValues({ ...values, [name]: event.target.value })
@@ -63,7 +89,10 @@ const User = (props) => {
 
     const clickSubmit = (event) => {
         event.preventDefault();
-        props.postUser(values)
+        //console.log(props.deviceToken)
+        if (values.deviceToken)
+            props.postData(values)
+        else getToken()
     }
 
     return (
@@ -100,16 +129,28 @@ const User = (props) => {
                         autoComplete="email"
                         autoFocus
                     />
-                    <Button
-                        type="submit"
-                        fullWidth
-                        variant="contained"
-                        color="primary"
-                        className={classes.submit}
-                        onClick={clickSubmit}
-                    >
-                        Set Notifier
+                    {(values.deviceToken) ?
+                        <Button
+                            type="submit"
+                            fullWidth
+                            variant="contained"
+                            color="primary"
+                            className={classes.submit}
+                            onClick={clickSubmit}
+                        >
+                            Set Notifier
+                        </Button> :
+                        <Button
+                            type="submit"
+                            fullWidth
+                            variant="contained"
+                            color="primary"
+                            className={classes.submit}
+                            onClick={clickSubmit}
+                        >
+                            Allow Notifications
                         </Button>
+                    }
                 </form>
             </div>
         </Container>
