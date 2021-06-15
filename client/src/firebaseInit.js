@@ -1,13 +1,14 @@
 import firebase from 'firebase/app';
 import 'firebase/messaging';
+import { config } from './config/config.js';
 
 var firebaseConfig = {
-    apiKey: "AIzaSyACKhgOVvY1yPL3LHC_biFoTKsms-k5thw",
-    authDomain: "cowin-nearby-test.firebaseapp.com",
-    projectId: "cowin-nearby-test",
-    storageBucket: "cowin-nearby-test.appspot.com",
-    messagingSenderId: "622923549677",
-    appId: "1:622923549677:web:023dd3bb3cd8136e4935e4"
+    apiKey: config.REACT_APP_API_KEY,
+    authDomain: config.REACT_APP_AUTH_DOMAIN,
+    projectId: config.REACT_APP_PROJECT_ID,
+    storageBucket: config.REACT_APP_STORAGE_BUCKET,
+    messagingSenderId: config.REACT_APP_MESSAGING_SENDER_ID,
+    appId: config.REACT_APP_APP_ID,
 };
 
 firebase.initializeApp(firebaseConfig);
