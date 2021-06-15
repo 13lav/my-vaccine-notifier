@@ -19,7 +19,6 @@ export const getCentersByPin = (req, res) => {
 export const getCentersByDistrict = (req, res) => {
     try {
         Center.find({ district_name: req.params.district }, function (err, docs) {
-            console.log(docs)
             if (err)
                 console.log(err);
             if (docs.length)

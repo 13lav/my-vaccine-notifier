@@ -117,3 +117,6 @@ dist
 
 #Scraped data
 data/
+
+#firebase
+cowin-nearby-test-firebase-adminsdk-w5kwp-2c59b3865a.json

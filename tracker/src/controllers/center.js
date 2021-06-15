@@ -1,7 +1,8 @@
 import Center from '../models/center.js';
+import User from '../models/user.js';
 import Session from '../models/session.js';
-import Mailer from '../models/mailer.js';
-import sendMail from './mailer.js';
+import Notifier from '../models/notifier.js';
+import { notifier } from './notifier.js';
 
 const addCenter = (center) => {
     var newCenter = {
@@ -28,7 +29,7 @@ const addCenter = (center) => {
     }
 }
 
-const getNewSessions = (center, mailer) => {
+const getNewSessions = (center, notifierData) => {
 
     center.sessions.forEach((session) => {
         var newSession = {
@@ -53,15 +54,15 @@ const getNewSessions = (center, mailer) => {
                 if (doc.upserted) {
                     console.log('---', center.name, session.session_id)
                     console.log(session.date, center.state_name, center.pincode, "--", session.min_age_limit, session.vaccine, session.available_capacity, now.toLocaleString(undefined, { timeZone: 'Asia/Kolkata' }))
-                    var content = '---' + center.name + session.session_id + ' ' + center.pincode + "--" + session.min_age_limit + session.vaccine + session.available_capacity + '--' + now.toLocaleString(undefined, { timeZone: 'Asia/Kolkata' })
-                    if (mailer) {
-                        mailer.users.forEach((id) => {
+                    var content = center.name + ' ' + center.pincode + ' ' + session.min_age_limit + ' ' + session.vaccine + ' ' + session.available_capacity
+                    if (notifierData) {
+                        notifierData.users.forEach((id) => {
                             try {
                                 User.findById(id, function (err, doc) {
                                     if (err)
                                         console.log(err)
                                     if (doc)
-                                        sendMail(doc, content)
+                                        notifier(doc, content)
                                 });
                             } catch (e) {
                                 console.error(e);
@@ -79,7 +80,7 @@ const getNewSessions = (center, mailer) => {
 export const updateTrackerDB = (centers) => {
     centers.forEach(center => {
         try {
-            Mailer.findById(center.center_id, function (err, doc) {
+            Notifier.findById(center.center_id, function (err, doc) {
                 if (err)
                     console.log(err);
                 getNewSessions(center, doc);
