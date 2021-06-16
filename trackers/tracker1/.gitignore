@@ -116,3 +116,6 @@ dist
 .yarn/build-state.yml
 .yarn/install-state.gz
 .pnp.*
+
+#firebase
+src/cowin-nearby-test-firebase-adminsdk-w5kwp-2c59b3865a.json

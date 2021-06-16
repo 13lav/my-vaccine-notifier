@@ -24,7 +24,10 @@ chrome-user-data
 .vscode
 *.swp
 *.swo
+
+# dotenv environment variables file
 .env
+.env.test
 
 packages/react-devtools-core/dist
 packages/react-devtools-extensions/chrome/build

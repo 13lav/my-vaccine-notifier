@@ -32,26 +32,26 @@ const getCenters = async (id) => {
 }
 
 const getByState = async (states, callback) => {
-    //await states.forEach(async (state) => {
-    try {
-        await states[8].districts.forEach(async (district) => {
-            await getCenters(district.district_id).then(async (data) => {
-                try {
-                    //console.log(district.district_id, '  centers - ', data.centers.length)
-                    await data.centers.forEach((center) => {
-                        centers = [...centers, center]
-                    })
-                } catch (err) {
-                    console.log(err)
-                }
+    await states.forEach(async (state) => {
+        try {
+            await state.districts.forEach(async (district) => {
+                await getCenters(district.district_id).then(async (data) => {
+                    try {
+                        //console.log(district.district_id, '  centers - ', data.centers.length)
+                        await data.centers.forEach((center) => {
+                            centers = [...centers, center]
+                        })
+                    } catch (err) {
+                        console.log(err)
+                    }
+                })
+                callback()
+                centers = []
             })
-            callback()
-            centers = []
-        })
-    } catch (err) {
-        console.log(err)
-    }
-    //})
+        } catch (err) {
+            console.log(err)
+        }
+    })
 }
 
 const tracker = (seconds) => {
