@@ -125,7 +125,7 @@ export default function Cowin() {
         }
         console.log(data)
         try {
-            let response = await fetch('http://192.168.1.6:4000/api/user/notifyme', {
+            let response = await fetch('https://api.myvaccinenotifier.me/api/user/notifyme', {
                 method: 'POST',
                 headers: {
                     'Content-Type': 'application/json'

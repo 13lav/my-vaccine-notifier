@@ -67,7 +67,7 @@ const tracker = (seconds) => {
         } catch (err) {
             console.log(err)
         }
-	setTimeout(callAgain, 1000 * seconds);
+        setTimeout(callAgain, 1000 * seconds);
     }
 
     callAgain();
