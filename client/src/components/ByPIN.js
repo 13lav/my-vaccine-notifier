@@ -3,6 +3,7 @@ import { React, useState } from 'react';
 import { makeStyles } from '@material-ui/core/styles';
 import TextField from '@material-ui/core/TextField';
 import Button from '@material-ui/core/Button';
+import { config } from '../config/config.js';
 
 const useStyles = makeStyles((theme) => ({
     root: {
@@ -32,7 +33,7 @@ const ByPIN = (props) => {
     const getByPIN = async (pin) => {
 
         try {
-            let response = await fetch(`https://api.myvaccinenotifier.me/api/centers/byPincode/${pin}`, {
+            let response = await fetch(`${config.REACT_APP_URL}/api/centers/byPincode/${pin}`, {
                 method: 'GET',
                 headers: {
                     'Content-Type': 'application/json'

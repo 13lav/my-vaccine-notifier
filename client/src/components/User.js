@@ -17,7 +17,10 @@ const useStyles = makeStyles((theme) => ({
         alignItems: 'center',
         width: '50%',
         padding: '1%',
-        marginTop: '5%'
+        marginTop: '10%',
+        [theme.breakpoints.down('sm')]: {
+            width: '80%',
+        },
     },
     image: {
         backgroundRepeat: 'no-repeat',
@@ -27,7 +30,7 @@ const useStyles = makeStyles((theme) => ({
         backgroundPosition: 'center',
     },
     paper: {
-        margin: theme.spacing(8, 4),
+        margin: theme.spacing(3, 3),
         display: 'flex',
         flexDirection: 'column',
         alignItems: 'center',
@@ -101,7 +104,7 @@ const User = (props) => {
             <div className={classes.paper}>
                 <Typography component="h1" variant="h5">
                     Notifier Details
-                    </Typography>
+                </Typography>
                 <form className={classes.form} noValidate>
                     <TextField
                         variant="outlined"
@@ -115,6 +118,7 @@ const User = (props) => {
                         onChange={handleChange('name')}
                         value={values.name}
                         autoComplete="current-name"
+                        autoFocus
                     />
                     <TextField
                         variant="outlined"
@@ -127,14 +131,13 @@ const User = (props) => {
                         label="Email Address"
                         name="email"
                         autoComplete="email"
-                        autoFocus
                     />
                     {(values.deviceToken) ?
                         <Button
                             type="submit"
                             fullWidth
                             variant="contained"
-                            color="primary"
+                            color="secondary"
                             className={classes.submit}
                             onClick={clickSubmit}
                         >

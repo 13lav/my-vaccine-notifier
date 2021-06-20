@@ -18,10 +18,13 @@ import TableHead from '@material-ui/core/TableHead';
 import TableRow from '@material-ui/core/TableRow';
 import Paper from '@material-ui/core/Paper';
 import Chip from '@material-ui/core/Chip';
+import Snackbar from '@material-ui/core/Snackbar';
+import Alert from '@material-ui/lab/Alert';
 
 import ByDistrict from './ByDistrict';
 import ByPIN from './ByPIN';
 import ByLocation from './ByLocation';
+import { config } from '../config/config.js';
 
 const useStyles = makeStyles((theme) => ({
     paper: {
@@ -104,6 +107,18 @@ export default function Cowin() {
     const [maxAge, setMaxAge] = useState(60);
     const [free, setFree] = useState('');
     const [paid, setPaid] = useState('');
+    const [notifier, setNotifier] = useState(false);
+
+    const handleNotifier = () => {
+        setNotifier(true);
+    };
+
+    const closeNotifier = (event, reason) => {
+        if (reason === 'clickaway') {
+            return;
+        }
+        setNotifier(false);
+    };
 
     const getContent = (id) => {
         switch (id) {
@@ -123,9 +138,9 @@ export default function Cowin() {
                 deviceToken: user.deviceToken
             }
         }
-        console.log(data)
+        //console.log(data)
         try {
-            let response = await fetch('https://api.myvaccinenotifier.me/api/user/notifyme', {
+            let response = await fetch(`${config.REACT_APP_URL}/api/user/notifyme`, {
                 method: 'POST',
                 headers: {
                     'Content-Type': 'application/json'
@@ -133,7 +148,9 @@ export default function Cowin() {
                 body: JSON.stringify(data)
             })
             let res = await response.json()
-            console.log(res)
+            if (response.status === 201)
+                handleNotifier()
+            //console.log(res)
             return res
         } catch (err) {
             console.log(err)
@@ -200,6 +217,11 @@ export default function Cowin() {
                 >
                     Notify Me
                 </Button>
+                <Snackbar open={notifier} autoHideDuration={6000} onClose={closeNotifier}>
+                    <Alert onClose={closeNotifier} severity="success">
+                        Congrats!! Your Vaccine Notifier has been  Deployed Successfully...
+                    </Alert>
+                </Snackbar>
             </div>
             <div>
                 <Grid container spacing={2} >
@@ -368,7 +390,7 @@ export default function Cowin() {
                     aria-labelledby="simple-modal-title"
                     aria-describedby="simple-modal-description"
                 >
-                    <User postData={postData} />
+                    <User postData={postData} close={handleClose} />
                 </Modal>
             </div>
             <TableContainer component={Paper}>

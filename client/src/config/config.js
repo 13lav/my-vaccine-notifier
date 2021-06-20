@@ -8,4 +8,5 @@ export const config = {
     REACT_APP_STORAGE_BUCKET: process.env.REACT_APP_STORAGE_BUCKET,
     REACT_APP_MESSAGING_SENDER_ID: process.env.REACT_APP_MESSAGING_SENDER_ID,
     REACT_APP_APP_ID: process.env.REACT_APP_APP_ID,
+    REACT_APP_URL: process.env.REACT_APP_URL
 };

@@ -8,6 +8,8 @@ import InputLabel from '@material-ui/core/InputLabel';
 import MenuItem from '@material-ui/core/MenuItem';
 import FormControl from '@material-ui/core/FormControl';
 import Select from '@material-ui/core/Select';
+import { config } from '../config/config.js';
+
 
 const useStyles = makeStyles((theme) => ({
     root: {
@@ -51,7 +53,7 @@ const ByDistrict = (props) => {
     const getByDistrict = async (district) => {
 
         try {
-            let response = await fetch(`https://api.myvaccinenotifier.me/api/centers/byDistrict/${district.district_name}`, {
+            let response = await fetch(`${config.REACT_APP_URL}/api/centers/byDistrict/${district.district_name}`, {
                 method: 'GET',
                 headers: {
                     'Content-Type': 'application/json'
