@@ -32,7 +32,7 @@ const ByPIN = (props) => {
     const getByPIN = async (pin) => {
 
         try {
-            let response = await fetch(`http://192.168.1.6:4000/api/centers/byPincode/${pin}`, {
+            let response = await fetch(`https://api.myvaccinenotifier.me/api/centers/byPincode/${pin}`, {
                 method: 'GET',
                 headers: {
                     'Content-Type': 'application/json'

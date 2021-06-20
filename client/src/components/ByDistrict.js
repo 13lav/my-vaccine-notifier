@@ -51,7 +51,7 @@ const ByDistrict = (props) => {
     const getByDistrict = async (district) => {
 
         try {
-            let response = await fetch(`http://192.168.1.6:4000/api/centers/byDistrict/${district.district_name}`, {
+            let response = await fetch(`https://api.myvaccinenotifier.me/api/centers/byDistrict/${district.district_name}`, {
                 method: 'GET',
                 headers: {
                     'Content-Type': 'application/json'

@@ -83,6 +83,7 @@ export const updateTrackerDB = (centers) => {
             Notifier.findById(center.center_id, function (err, doc) {
                 if (err)
                     console.log(err);
+		if (doc)
                 getNewSessions(center, doc);
             });
             addCenter(center)
