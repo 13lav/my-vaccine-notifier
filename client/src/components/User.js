@@ -6,10 +6,6 @@ import Container from '@material-ui/core/Container';
 import Typography from '@material-ui/core/Typography';
 import { makeStyles } from '@material-ui/core/styles';
 import { requestFirebaseNotificationPermission, onMessageListener } from '../firebaseInit'
-// import { useHistory } from "react-router-dom";
-// import { connect } from 'react-redux';
-// import { loginCheck } from '../redux/actionCreators';
-// import Alert from '@material-ui/lab/Alert';
 
 const useStyles = makeStyles((theme) => ({
     root: {
