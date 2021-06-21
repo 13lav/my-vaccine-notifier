@@ -24,6 +24,7 @@ import Alert from '@material-ui/lab/Alert';
 import ByDistrict from './ByDistrict';
 import ByPIN from './ByPIN';
 import ByLocation from './ByLocation';
+import Footer from './Footer';
 import { config } from '../config/config.js';
 
 const useStyles = makeStyles((theme) => ({
@@ -62,7 +63,10 @@ const useStyles = makeStyles((theme) => ({
         padding: theme.spacing(1, 4, 1),
     },
     address: {
-        width: '48vw'
+        width: '48vw',
+        [theme.breakpoints.down('sm')]: {
+            width: '96vw',
+        },
     },
     filters: {
         padding: '28px',
@@ -431,6 +435,7 @@ export default function Cowin() {
                 </Table>
                 {centers.length === 0 ? <Typography variant="h5" className={classes.title} > No Centers Available </Typography> : <div></div>}
             </TableContainer>
+            <Footer />
         </Container >
     );
 }

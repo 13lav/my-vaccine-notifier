@@ -28,7 +28,7 @@ export default function MenuTabs(props) {
                 centered
             >
                 <Tab label="By District" />
-                <Tab label="By PIN" />
+                <Tab label="By PINCode" />
                 <Tab label="By Location" />
             </Tabs>
         </Paper>

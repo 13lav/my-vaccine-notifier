@@ -4,7 +4,7 @@ import { makeStyles } from '@material-ui/core/styles';
 import Button from '@material-ui/core/Button';
 import Typography from '@material-ui/core/Typography';
 
-//import NewMap from './newMap';
+import NewMap from './newMap';
 
 const useStyles = makeStyles((theme) => ({
     root: {
@@ -79,26 +79,26 @@ const ByLocation = (props) => {
                 <Typography variant="h6" className={classes.text}>
                     Coming Soon...
                 </Typography>
-                {/* <Button
-                    type="submit"
-                    fullWidth
-                    variant="contained"
-                    color="secondary"
-                    className={classes.submit}
-                //onClick={getLocation}
-                >
-                    Get Your Location
-                </Button> */}
-                {/*<div className={classes.mapContainer}>
-                    <NewMap />
-                </div>*/}
                 <Button
                     type="submit"
                     fullWidth
                     variant="contained"
                     color="secondary"
                     className={classes.submit}
-                //onClick={clickSubmit}
+                    onClick={getLocation}
+                >
+                    Get Your Location
+                </Button>
+                <div className={classes.mapContainer}>
+                    <NewMap />
+                </div>
+                <Button
+                    type="submit"
+                    fullWidth
+                    variant="contained"
+                    color="secondary"
+                    className={classes.submit}
+                    onClick={clickSubmit}
                 >
                     Find Certers
                 </Button>

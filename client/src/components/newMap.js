@@ -12,7 +12,7 @@ const useStyles = makeStyles((theme) => ({
 const NewMap = (props) => {
     const classes = useStyles();
 
-    const position = [28.505, 72.09]
+    //const position = [28.505, 72.09]
 
     return (
         <MapContainer center={[28.675, 77.2]} zoom={12} scrollWheelZoom={false} className={classes.map}>
