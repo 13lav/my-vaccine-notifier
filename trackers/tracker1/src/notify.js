@@ -3,6 +3,24 @@ import { messaging } from './firebaseInit.js';
 export const sendNotificationToClient = (tokens, data) => {
     // Send a message to the devices corresponding to the provided
     // registration tokens.
+    const android = {
+        ttl: 300000,
+        notification: {
+            click_action: "OPEN_ACTIVITY_1"
+        },
+        //collapseKey: "myvaccinenotifier",
+        tag: "myvaccinenotifier"
+    }
+
+    const message = {
+        tokens: tokens,
+        notification: data,
+        android: android,
+        webpush: {
+
+        }
+    }
+
     messaging
         .sendMulticast({ tokens, data })
         .then(response => {
