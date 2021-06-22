@@ -80,18 +80,19 @@ const ByDistrict = (props) => {
             <form className={classes.form} noValidate>
                 <Grid container spacing={2} className={classes.container} >
                     <Grid item xs={12} sm={6}>
-                        <FormControl className={classes.formControl}>
+                        <FormControl className={classes.formControl} >
                             <InputLabel id="select-label">Select State</InputLabel>
                             <Select
                                 labelId="select-label"
                                 id="select-state"
+                                defaultValue=""
                                 value={state.state_name}
                                 onChange={handleState}
                                 name="selectedState"
+                                elevation={0}
                             >
                                 {
                                     states.map((state, idx) => {
-                                        //console.log(state.state_name)
                                         return (
                                             <MenuItem
                                                 key={idx}
@@ -113,6 +114,7 @@ const ByDistrict = (props) => {
                             <Select
                                 labelId="select-label"
                                 id="select-district"
+                                defaultValue=""
                                 value={district.district_name}
                                 onChange={handleDistrict}
                                 name="selectedDistrict"

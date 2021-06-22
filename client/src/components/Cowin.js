@@ -215,7 +215,6 @@ export default function Cowin() {
                     type="submit"
                     variant="contained"
                     color="primary"
-                    fullwidth
                     className={classes.notify}
                     onClick={handleOpen}
                 >
@@ -246,7 +245,7 @@ export default function Cowin() {
                         <Chip
                             size="medium"
                             label="18+"
-                            color={(age === 18) ? "primary" : ""}
+                            color={(age === 18) ? "primary" : "default"}
                             className={classes.chip}
                             onClick={
                                 () => {
@@ -266,7 +265,7 @@ export default function Cowin() {
                         <Chip
                             size="medium"
                             label="45+"
-                            color={(age === 45) ? "primary" : ""}
+                            color={(age === 45) ? "primary" : "default"}
                             className={classes.chip}
                             onClick={
                                 () => {
@@ -286,7 +285,7 @@ export default function Cowin() {
                         <Chip
                             size="medium"
                             label="COVAXIN"
-                            color={(covaxin) ? "primary" : ""}
+                            color={(covaxin) ? "primary" : "default"}
                             className={classes.chip}
                             onClick={
                                 () => {
@@ -303,7 +302,7 @@ export default function Cowin() {
                         <Chip
                             size="medium"
                             label="COVISHIELD"
-                            color={(covishield) ? "primary" : ""}
+                            color={(covishield) ? "primary" : "default"}
                             className={classes.chip}
                             onClick={
                                 () => {
@@ -320,7 +319,7 @@ export default function Cowin() {
                         <Chip
                             size="medium"
                             label="SPUTNIK"
-                            color={(sputnik) ? "primary" : ""}
+                            color={(sputnik) ? "primary" : "default"}
                             className={classes.chip}
                             onClick={
                                 () => {
@@ -337,7 +336,7 @@ export default function Cowin() {
                         <Chip
                             size="medium"
                             label="FREE"
-                            color={(free) ? "primary" : ""}
+                            color={(free) ? "primary" : "default"}
                             className={classes.chip}
                             onClick={
                                 () => {
@@ -353,7 +352,7 @@ export default function Cowin() {
                         <Chip
                             size="medium"
                             label="PAID"
-                            color={(paid) ? "primary" : ""}
+                            color={(paid) ? "primary" : "default"}
                             className={classes.chip}
                             onClick={
                                 () => {
@@ -394,7 +393,7 @@ export default function Cowin() {
                     aria-labelledby="simple-modal-title"
                     aria-describedby="simple-modal-description"
                 >
-                    <User postData={postData} close={handleClose} />
+                    <div><User postData={postData} close={handleClose} /></div>
                 </Modal>
             </div>
             <TableContainer component={Paper}>

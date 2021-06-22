@@ -42,7 +42,7 @@ const ButtonAppBar = (props) => {
 
     return (
         <div className={classes.root}>
-            <AppBar position="static">
+            <AppBar position="static" elevation={0} >
                 <Toolbar>
                     <Typography variant="h5" className={classes.title}>
                         MyVaccineNotifier

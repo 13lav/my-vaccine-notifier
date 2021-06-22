@@ -4,7 +4,7 @@ import { makeStyles } from '@material-ui/core/styles';
 import Button from '@material-ui/core/Button';
 import Typography from '@material-ui/core/Typography';
 
-import NewMap from './newMap';
+//import NewMap from './newMap';
 
 const useStyles = makeStyles((theme) => ({
     root: {
@@ -89,9 +89,9 @@ const ByLocation = (props) => {
                 >
                     Get Your Location
                 </Button>
-                <div className={classes.mapContainer}>
+                {/* <div className={classes.mapContainer}>
                     <NewMap />
-                </div>
+                </div> */}
                 <Button
                     type="submit"
                     fullWidth
