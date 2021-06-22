@@ -76,7 +76,7 @@ const ByPIN = (props) => {
                     className={classes.submit}
                     onClick={clickSubmit}
                 >
-                    Find Certers
+                    Find Centers
                 </Button>
             </form>
         </div>

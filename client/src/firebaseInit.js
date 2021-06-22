@@ -14,7 +14,6 @@ var firebaseConfig = {
 firebase.initializeApp(firebaseConfig);
 const messaging = firebase.messaging();
 
-// next block of code goes here
 export const requestFirebaseNotificationPermission = (setTokenFound) =>
     new Promise((resolve, reject) => {
         messaging

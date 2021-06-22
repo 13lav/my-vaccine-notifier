@@ -12,7 +12,9 @@ const useStyles = makeStyles((theme) => ({
     },
     form: {
         width: '100%', // Fix IE 11 issue.
-        marginTop: theme.spacing(3),
+        marginTop: theme.spacing(1),
+        textAlign: 'left',
+        paddingLeft: '8%'
     },
     submit: {
         margin: theme.spacing(4, 0, 2),
@@ -27,8 +29,7 @@ const useStyles = makeStyles((theme) => ({
         left: '1%'
     },
     text: {
-        flexGrow: 1,
-        margin: theme.spacing(5, 0, 4)
+        fontSize: '18px'
     },
 }));
 
@@ -76,10 +77,16 @@ const ByLocation = (props) => {
     return (
         <div className={classes.root}>
             <form className={classes.form} noValidate>
-                <Typography variant="h6" className={classes.text}>
-                    Coming Soon...
+                <Typography className={classes.text}>
+                    - Search Centers by District/PIN.<br />
+                    - Use filters to acc. to your needs.<br />
+                    - Add/Remove centers to/from your notifier list.<br />
+                    - Click on Notify Me, enter details.<br />
+                    - *Click Allow Notifications and press Allow on popup.<br />
+                    - Now click on Set Notifier and Done!<br />
+                    * This Web-App notifies via the browser you use to set your Notifier.<br />
                 </Typography>
-                <Button
+                {/* <Button
                     type="submit"
                     fullWidth
                     variant="contained"
@@ -88,11 +95,11 @@ const ByLocation = (props) => {
                     onClick={getLocation}
                 >
                     Get Your Location
-                </Button>
+                </Button> */}
                 {/* <div className={classes.mapContainer}>
                     <NewMap />
                 </div> */}
-                <Button
+                {/* <Button
                     type="submit"
                     fullWidth
                     variant="contained"
@@ -101,7 +108,7 @@ const ByLocation = (props) => {
                     onClick={clickSubmit}
                 >
                     Find Certers
-                </Button>
+                </Button> */}
             </form>
         </div>
     )

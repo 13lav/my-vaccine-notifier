@@ -211,7 +211,7 @@ export default function Cowin() {
             <div className={classes.paper}>
                 <Tabs value={tab} setValue={setTab} />
                 {getContent(tab)}
-                <Button
+                {(tab !== 2) ? <Button
                     type="submit"
                     variant="contained"
                     color="primary"
@@ -219,7 +219,7 @@ export default function Cowin() {
                     onClick={handleOpen}
                 >
                     Notify Me
-                </Button>
+                </Button> : <div></div>}
                 <Snackbar open={notifier} autoHideDuration={6000} onClose={closeNotifier}>
                     <Alert onClose={closeNotifier} severity="success">
                         Congrats!! Your Vaccine Notifier has been  Deployed Successfully...
