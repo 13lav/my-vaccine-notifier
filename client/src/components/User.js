@@ -66,7 +66,7 @@ const User = (props) => {
 
         requestFirebaseNotificationPermission(setTokenFound)
             .then((firebaseToken) => {
-                console.log('Device Token Found', firebaseToken);
+                //console.log('Device Token Found', firebaseToken);
                 setValues({ ...values, deviceToken: firebaseToken })
             })
             .catch((err) => {

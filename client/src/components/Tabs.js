@@ -29,7 +29,7 @@ export default function MenuTabs(props) {
             >
                 <Tab label="By District" />
                 <Tab label="By PINCode" />
-                <Tab label="By Location" />
+                <Tab label="How to use" />
             </Tabs>
         </Paper>
     );
