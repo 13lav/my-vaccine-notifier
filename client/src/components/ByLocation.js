@@ -29,7 +29,8 @@ const useStyles = makeStyles((theme) => ({
         left: '1%'
     },
     text: {
-        fontSize: '18px'
+        fontSize: '18px',
+        fontWeight: '600'
     },
 }));
 

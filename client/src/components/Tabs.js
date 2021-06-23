@@ -9,6 +9,9 @@ const useStyles = makeStyles({
         flexGrow: 1,
         width: '100%'
     },
+    label: {
+        fontWeight: '900'
+    }
 });
 
 export default function MenuTabs(props) {
@@ -27,9 +30,9 @@ export default function MenuTabs(props) {
                 textColor="primary"
                 centered
             >
-                <Tab label="By District" />
-                <Tab label="By PINCode" />
-                <Tab label="How to use" />
+                <Tab className={classes.label} label="By District" />
+                <Tab className={classes.label} label="By PINCode" />
+                <Tab className={classes.label} label="How to use" />
             </Tabs>
         </Paper>
     );
