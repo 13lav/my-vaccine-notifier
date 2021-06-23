@@ -11,11 +11,12 @@ const useStyles = makeStyles((theme) => ({
     root: {
         justifyContent: 'center',
         alignItems: 'center',
-        width: '50%',
+        width: '100%',
         padding: '1%',
-        marginTop: '10%',
+        marginTop: '20%',
+        borderRadius: theme.spacing(2),
         [theme.breakpoints.down('sm')]: {
-            width: '80%',
+            marginTop: '33%',
         },
     },
     image: {
@@ -91,7 +92,10 @@ const User = (props) => {
         //console.log(props.deviceToken)
         if (values.deviceToken)
             props.postData(values)
-        else getToken()
+        else {
+            setValues({ ...values, deviceToken: 'wait' })
+            getToken()
+        }
     }
 
     return (
@@ -128,17 +132,7 @@ const User = (props) => {
                         name="email"
                         autoComplete="email"
                     />
-                    {(values.deviceToken) ?
-                        <Button
-                            type="submit"
-                            fullWidth
-                            variant="contained"
-                            color="secondary"
-                            className={classes.submit}
-                            onClick={clickSubmit}
-                        >
-                            Set Notifier
-                        </Button> :
+                    {(!values.deviceToken) ?
                         <Button
                             type="submit"
                             fullWidth
@@ -148,6 +142,16 @@ const User = (props) => {
                             onClick={clickSubmit}
                         >
                             Allow Notifications
+                        </Button> :
+                        <Button
+                            type="submit"
+                            fullWidth
+                            variant="contained"
+                            color={(values.deviceToken === 'wait') ? 'secondary' : 'primary'}
+                            className={classes.submit}
+                            onClick={clickSubmit}
+                        >
+                            {(values.deviceToken === 'wait') ? 'Loading...' : 'Set Notifier'}
                         </Button>
                     }
                 </form>

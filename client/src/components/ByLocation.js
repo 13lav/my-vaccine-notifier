@@ -1,8 +1,8 @@
 import { React, useState } from 'react';
 
 import { makeStyles } from '@material-ui/core/styles';
-import Button from '@material-ui/core/Button';
-import Typography from '@material-ui/core/Typography';
+// import Button from '@material-ui/core/Button';
+// import Typography from '@material-ui/core/Typography';
 
 //import NewMap from './newMap';
 
@@ -14,7 +14,7 @@ const useStyles = makeStyles((theme) => ({
         width: '100%', // Fix IE 11 issue.
         marginTop: theme.spacing(1),
         textAlign: 'left',
-        paddingLeft: '8%'
+        //paddingLeft: '8%'
     },
     submit: {
         margin: theme.spacing(4, 0, 2),
@@ -28,8 +28,8 @@ const useStyles = makeStyles((theme) => ({
         position: 'absolute',
         left: '1%'
     },
-    text: {
-        fontSize: '18px'
+    image: {
+        width: '100%',
     },
 }));
 
@@ -77,7 +77,8 @@ const ByLocation = (props) => {
     return (
         <div className={classes.root}>
             <form className={classes.form} noValidate>
-                <Typography className={classes.text}>
+                <img className={classes.image} src="./HowToUse.png" ></img>
+                {/* <Typography className={classes.text}>
                     - Search Centers by District/PIN.<br />
                     - Use filters to acc. to your needs.<br />
                     - Add/Remove centers to/from your notifier list.<br />
@@ -85,7 +86,7 @@ const ByLocation = (props) => {
                     - *Click Allow Notifications and press Allow on popup.<br />
                     - Now click on Set Notifier and Done!<br />
                     * This Web-App notifies via the browser you use to set your Notifier.<br />
-                </Typography>
+                </Typography> */}
                 {/* <Button
                     type="submit"
                     fullWidth
