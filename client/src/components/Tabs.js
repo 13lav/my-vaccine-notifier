@@ -31,8 +31,8 @@ export default function MenuTabs(props) {
                 centered
             >
                 <Tab className={classes.label} label="By District" />
-                <Tab className={classes.label} label="By PINCode" />
                 <Tab className={classes.label} label="How to use" />
+                <Tab className={classes.label} label="By PINCode" />
             </Tabs>
         </Paper>
     );

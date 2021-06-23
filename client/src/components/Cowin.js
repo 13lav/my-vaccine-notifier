@@ -91,6 +91,9 @@ const useStyles = makeStyles((theme) => ({
     },
     notify: {
         width: '100%'
+    },
+    fill: {
+        height: '16vh'
     }
 }));
 
@@ -101,7 +104,7 @@ export default function Cowin() {
 
     const [list, setList] = useState([]);
     const [open, setOpen] = useState(false);
-    const [tab, setTab] = useState(0);
+    const [tab, setTab] = useState(1);
     const [filterText, setFilterText] = useState('');
     const [covaxin, setCovaxin] = useState('');
     const [covishield, setCovishield] = useState('');
@@ -127,8 +130,8 @@ export default function Cowin() {
     const getContent = (id) => {
         switch (id) {
             case 0: return <ByDistrict setCenters={setCenters} />;
-            case 1: return <ByPIN setCenters={setCenters} />;
-            case 2: return <ByLocation setCenters={setCenters} />;
+            case 1: return <ByLocation setCenters={setCenters} />;
+            case 2: return <ByPIN setCenters={setCenters} />;
             default: break;
         }
     }
@@ -211,7 +214,7 @@ export default function Cowin() {
             <div className={classes.paper}>
                 <Tabs value={tab} setValue={setTab} />
                 {getContent(tab)}
-                {(tab !== 2) ? <Button
+                {(tab !== 1) ? <Button
                     type="submit"
                     variant="contained"
                     color="primary"
@@ -226,214 +229,215 @@ export default function Cowin() {
                     </Alert>
                 </Snackbar>
             </div>
-            <div>
-                <Grid container spacing={2} >
-                    <Grid item xs={12} sm={3} >
-                        <TextField
-                            variant="outlined"
-                            margin="normal"
-                            name="filter"
-                            label="Filter"
-                            type="filter"
-                            id="filter"
-                            fullWidth
-                            onChange={handleFilter}
-                            value={filterText}
-                        />
-                    </Grid>
-                    <Grid item xs={12} sm={6}>
-                        <Chip
-                            size="medium"
-                            label="18+"
-                            color={(age === 18) ? "primary" : "default"}
-                            className={classes.chip}
-                            onClick={
-                                () => {
-                                    if (age === 18) {
-                                        setAge(0)
-                                        setMinAge(0)
-                                        setMaxAge(60)
-                                    }
-                                    else {
-                                        setAge(18)
-                                        setMinAge(0)
-                                        setMaxAge(30)
-                                    }
-                                }
-                            }
-                        />
-                        <Chip
-                            size="medium"
-                            label="45+"
-                            color={(age === 45) ? "primary" : "default"}
-                            className={classes.chip}
-                            onClick={
-                                () => {
-                                    if (age === 45) {
-                                        setAge(0)
-                                        setMinAge(0)
-                                        setMaxAge(60)
-                                    }
-                                    else {
-                                        setAge(45)
-                                        setMinAge(30)
-                                        setMaxAge(60)
+            {(tab !== 1) ? <div>
+                <div>
+                    <Grid container spacing={2} >
+                        <Grid item xs={12} sm={3} >
+                            <TextField
+                                variant="outlined"
+                                margin="normal"
+                                name="filter"
+                                label="Filter"
+                                type="filter"
+                                id="filter"
+                                fullWidth
+                                onChange={handleFilter}
+                                value={filterText}
+                            />
+                        </Grid>
+                        <Grid item xs={12} sm={6}>
+                            <Chip
+                                size="medium"
+                                label="18+"
+                                color={(age === 18) ? "primary" : "default"}
+                                className={classes.chip}
+                                onClick={
+                                    () => {
+                                        if (age === 18) {
+                                            setAge(0)
+                                            setMinAge(0)
+                                            setMaxAge(60)
+                                        }
+                                        else {
+                                            setAge(18)
+                                            setMinAge(0)
+                                            setMaxAge(30)
+                                        }
                                     }
                                 }
-                            }
-                        />
-                        <Chip
-                            size="medium"
-                            label="COVAXIN"
-                            color={(covaxin) ? "primary" : "default"}
-                            className={classes.chip}
-                            onClick={
-                                () => {
-                                    if (covaxin)
-                                        setCovaxin('')
-                                    else {
-                                        setCovaxin('COVAXIN')
-                                        setCovishield('')
-                                        setSputnik('')
+                            />
+                            <Chip
+                                size="medium"
+                                label="45+"
+                                color={(age === 45) ? "primary" : "default"}
+                                className={classes.chip}
+                                onClick={
+                                    () => {
+                                        if (age === 45) {
+                                            setAge(0)
+                                            setMinAge(0)
+                                            setMaxAge(60)
+                                        }
+                                        else {
+                                            setAge(45)
+                                            setMinAge(30)
+                                            setMaxAge(60)
+                                        }
                                     }
                                 }
-                            }
-                        />
-                        <Chip
-                            size="medium"
-                            label="COVISHIELD"
-                            color={(covishield) ? "primary" : "default"}
-                            className={classes.chip}
-                            onClick={
-                                () => {
-                                    if (covishield)
-                                        setCovishield('')
-                                    else {
-                                        setCovaxin('')
-                                        setCovishield('COVISHIELD')
-                                        setSputnik('')
+                            />
+                            <Chip
+                                size="medium"
+                                label="COVAXIN"
+                                color={(covaxin) ? "primary" : "default"}
+                                className={classes.chip}
+                                onClick={
+                                    () => {
+                                        if (covaxin)
+                                            setCovaxin('')
+                                        else {
+                                            setCovaxin('COVAXIN')
+                                            setCovishield('')
+                                            setSputnik('')
+                                        }
                                     }
                                 }
-                            }
-                        />
-                        <Chip
-                            size="medium"
-                            label="SPUTNIK"
-                            color={(sputnik) ? "primary" : "default"}
-                            className={classes.chip}
-                            onClick={
-                                () => {
-                                    if (sputnik)
-                                        setSputnik('')
-                                    else {
-                                        setCovaxin('')
-                                        setCovishield('')
-                                        setSputnik('SPUTNIK')
+                            />
+                            <Chip
+                                size="medium"
+                                label="COVISHIELD"
+                                color={(covishield) ? "primary" : "default"}
+                                className={classes.chip}
+                                onClick={
+                                    () => {
+                                        if (covishield)
+                                            setCovishield('')
+                                        else {
+                                            setCovaxin('')
+                                            setCovishield('COVISHIELD')
+                                            setSputnik('')
+                                        }
                                     }
                                 }
-                            }
-                        />
-                        <Chip
-                            size="medium"
-                            label="FREE"
-                            color={(free) ? "primary" : "default"}
-                            className={classes.chip}
-                            onClick={
-                                () => {
-                                    if (free)
-                                        setFree('')
-                                    else {
-                                        setFree('Free')
-                                        setPaid('')
+                            />
+                            <Chip
+                                size="medium"
+                                label="SPUTNIK"
+                                color={(sputnik) ? "primary" : "default"}
+                                className={classes.chip}
+                                onClick={
+                                    () => {
+                                        if (sputnik)
+                                            setSputnik('')
+                                        else {
+                                            setCovaxin('')
+                                            setCovishield('')
+                                            setSputnik('SPUTNIK')
+                                        }
                                     }
                                 }
-                            }
-                        />
-                        <Chip
-                            size="medium"
-                            label="PAID"
-                            color={(paid) ? "primary" : "default"}
-                            className={classes.chip}
-                            onClick={
-                                () => {
-                                    if (paid)
-                                        setPaid('')
-                                    else {
-                                        setFree('')
-                                        setPaid('Paid')
+                            />
+                            <Chip
+                                size="medium"
+                                label="FREE"
+                                color={(free) ? "primary" : "default"}
+                                className={classes.chip}
+                                onClick={
+                                    () => {
+                                        if (free)
+                                            setFree('')
+                                        else {
+                                            setFree('Free')
+                                            setPaid('')
+                                        }
                                     }
                                 }
-                            }
-                        />
-                    </Grid>
-                    <Grid item xs={12} sm={3}>
-                        <Button
-                            type="submit"
-                            variant="contained"
-                            color="secondary"
-                            className={classes.button}
-                            onClick={resetList}
-                        >
-                            Remove All
+                            />
+                            <Chip
+                                size="medium"
+                                label="PAID"
+                                color={(paid) ? "primary" : "default"}
+                                className={classes.chip}
+                                onClick={
+                                    () => {
+                                        if (paid)
+                                            setPaid('')
+                                        else {
+                                            setFree('')
+                                            setPaid('Paid')
+                                        }
+                                    }
+                                }
+                            />
+                        </Grid>
+                        <Grid item xs={12} sm={3}>
+                            <Button
+                                type="submit"
+                                variant="contained"
+                                color="secondary"
+                                className={classes.button}
+                                onClick={resetList}
+                            >
+                                Remove All
                     </Button>
-                        <Button
-                            type="submit"
-                            variant="contained"
-                            color="secondary"
-                            className={classes.button}
-                            onClick={addAll}
-                        >
-                            Select All
+                            <Button
+                                type="submit"
+                                variant="contained"
+                                color="secondary"
+                                className={classes.button}
+                                onClick={addAll}
+                            >
+                                Select All
                     </Button>
+                        </Grid>
                     </Grid>
-                </Grid>
-                <Modal
-                    open={open}
-                    onClose={handleClose}
-                    aria-labelledby="simple-modal-title"
-                    aria-describedby="simple-modal-description"
-                >
-                    <div className={classes.modal} ><User postData={postData} close={handleClose} /></div>
-                </Modal>
-            </div>
-            <TableContainer component={Paper}>
-                <Table className={classes.table} aria-label="simple table">
-                    <TableHead>
-                        <TableRow>
-                            <TableCell>Center Name</TableCell>
-                            <TableCell>Address</TableCell>
-                            <TableCell align="right">Vaccine</TableCell>
-                            <TableCell align="right">Age</TableCell>
-                            <TableCell align="right">Fee</TableCell>
-                            <TableCell align="center">Action</TableCell>
-                        </TableRow>
-                    </TableHead>
-                    <TableBody>
-                        {centers.filter(nextCenter => nextCenter.address.toLowerCase().includes(filterText.toLowerCase()) ||
-                            nextCenter.name.toLowerCase().includes(filterText.toLowerCase()))
-                            .filter(item =>
-                                item.vaccine.includes(covaxin) && item.vaccine.includes(covishield) &&
-                                item.vaccine.includes(sputnik))
-                            .filter(data =>
-                                data.fee_type.includes(free) && data.fee_type.includes(paid))
-                            .filter(obj =>
-                                obj.min_age_limit > minAge && obj.min_age_limit < maxAge)
-                            .map((center, idx) => {
-                                return <TableRow key={center.id}>
-                                    <TableCell>{center.name}</TableCell>
-                                    <TableCell className={classes.address} >{center.address}</TableCell>
-                                    <TableCell align="right">{center.vaccine}</TableCell>
-                                    <TableCell align="right">{center.min_age_limit}</TableCell>
-                                    <TableCell align="right">{center.fee_type}</TableCell>
-                                    <TableCell>
-                                        {list.includes(center._id) ? <Button color="secondary" onClick={() => { addToList(center._id) }} >Remove</Button> : <Button color="primary" onClick={() => { addToList(center._id) }} >Add</Button>}</TableCell>
-                                </TableRow>
-                            })
-                        }
-                    </TableBody>
-                </Table>
-                {centers.length === 0 ? <Typography variant="h5" className={classes.title} > No Centers Available </Typography> : <div></div>}
-            </TableContainer>
+                    <Modal
+                        open={open}
+                        onClose={handleClose}
+                        aria-labelledby="simple-modal-title"
+                        aria-describedby="simple-modal-description"
+                    >
+                        <div className={classes.modal} ><User postData={postData} close={handleClose} /></div>
+                    </Modal>
+                </div>
+                <TableContainer component={Paper}>
+                    <Table className={classes.table} aria-label="simple table">
+                        <TableHead>
+                            <TableRow>
+                                <TableCell>Center Name</TableCell>
+                                <TableCell>Address</TableCell>
+                                <TableCell align="right">Vaccine</TableCell>
+                                <TableCell align="right">Age</TableCell>
+                                <TableCell align="right">Fee</TableCell>
+                                <TableCell align="center">Action</TableCell>
+                            </TableRow>
+                        </TableHead>
+                        <TableBody>
+                            {centers.filter(nextCenter => nextCenter.address.toLowerCase().includes(filterText.toLowerCase()) ||
+                                nextCenter.name.toLowerCase().includes(filterText.toLowerCase()))
+                                .filter(item =>
+                                    item.vaccine.includes(covaxin) && item.vaccine.includes(covishield) &&
+                                    item.vaccine.includes(sputnik))
+                                .filter(data =>
+                                    data.fee_type.includes(free) && data.fee_type.includes(paid))
+                                .filter(obj =>
+                                    obj.min_age_limit > minAge && obj.min_age_limit < maxAge)
+                                .map((center, idx) => {
+                                    return <TableRow key={center.id}>
+                                        <TableCell>{center.name}</TableCell>
+                                        <TableCell className={classes.address} >{center.address}</TableCell>
+                                        <TableCell align="right">{center.vaccine}</TableCell>
+                                        <TableCell align="right">{center.min_age_limit}</TableCell>
+                                        <TableCell align="right">{center.fee_type}</TableCell>
+                                        <TableCell>
+                                            {list.includes(center._id) ? <Button color="secondary" onClick={() => { addToList(center._id) }} >Remove</Button> : <Button color="primary" onClick={() => { addToList(center._id) }} >Add</Button>}</TableCell>
+                                    </TableRow>
+                                })
+                            }
+                        </TableBody>
+                    </Table>
+                    {centers.length === 0 ? <Typography variant="h5" className={classes.title} > No Centers Available </Typography> : <div></div>}
+                </TableContainer> </div> : <div className={classes.fill}></div>}
             <Footer />
         </Container >
     );
