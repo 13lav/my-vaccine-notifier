@@ -11,11 +11,11 @@ const useStyles = makeStyles((theme) => ({
     root: {
         justifyContent: 'center',
         alignItems: 'center',
-        width: '50%',
+        width: '100%',
         padding: '1%',
-        marginTop: '10%',
+        marginTop: '20%',
         [theme.breakpoints.down('sm')]: {
-            width: '80%',
+            marginTop: '33%',
         },
     },
     image: {

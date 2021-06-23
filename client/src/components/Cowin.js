@@ -55,12 +55,12 @@ const useStyles = makeStyles((theme) => ({
         width: '100%'
     },
     modal: {
-        position: 'absolute',
-        width: 400,
-        backgroundColor: theme.palette.background.paper,
-        border: '2px solid #000',
-        boxShadow: theme.shadows[5],
-        padding: theme.spacing(1, 4, 1),
+        marginLeft: '24.5%',
+        width: '50%',
+        [theme.breakpoints.down('sm')]: {
+            width: '80%',
+            marginLeft: '10%',
+        },
     },
     address: {
         width: '48vw',
@@ -393,7 +393,7 @@ export default function Cowin() {
                     aria-labelledby="simple-modal-title"
                     aria-describedby="simple-modal-description"
                 >
-                    <div><User postData={postData} close={handleClose} /></div>
+                    <div className={classes.modal} ><User postData={postData} close={handleClose} /></div>
                 </Modal>
             </div>
             <TableContainer component={Paper}>
