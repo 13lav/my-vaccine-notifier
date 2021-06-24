@@ -94,6 +94,9 @@ const useStyles = makeStyles((theme) => ({
     },
     fill: {
         height: '16vh'
+    },
+    table: {
+        background: 'none'
     }
 }));
 
@@ -130,8 +133,8 @@ export default function Cowin() {
     const getContent = (id) => {
         switch (id) {
             case 0: return <ByDistrict setCenters={setCenters} />;
-            case 1: return <ByLocation setCenters={setCenters} />;
-            case 2: return <ByPIN setCenters={setCenters} />;
+            case 1: return <ByPIN setCenters={setCenters} />;
+            case 2: return <ByLocation setCenters={setCenters} />;
             default: break;
         }
     }
@@ -214,7 +217,7 @@ export default function Cowin() {
             <div className={classes.paper}>
                 <Tabs value={tab} setValue={setTab} />
                 {getContent(tab)}
-                {(tab !== 1) ? <Button
+                {(tab !== 2) ? <Button
                     type="submit"
                     variant="contained"
                     color="primary"
@@ -229,7 +232,7 @@ export default function Cowin() {
                     </Alert>
                 </Snackbar>
             </div>
-            {(tab !== 1) ? <div>
+            {(tab !== 2) ? <div>
                 <div>
                     <Grid container spacing={2} >
                         <Grid item xs={12} sm={3} >
@@ -400,8 +403,8 @@ export default function Cowin() {
                         <div className={classes.modal} ><User postData={postData} close={handleClose} /></div>
                     </Modal>
                 </div>
-                <TableContainer component={Paper}>
-                    <Table className={classes.table} aria-label="simple table">
+                <TableContainer className={classes.table} component={Paper}>
+                    <Table aria-label="simple table">
                         <TableHead>
                             <TableRow>
                                 <TableCell>Center Name</TableCell>
