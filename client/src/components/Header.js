@@ -22,6 +22,24 @@ const useStyles = makeStyles((theme) => ({
     },
     title: {
         flexGrow: 1,
+        fontFamily: "'Oregano', cursive",
+        fontSize: theme.spacing(4)
+    },
+    orange: {
+        marginLeft: '1px',
+        color: '#ed6300',
+        fontWeight: '800',
+        marginRight: '1px'
+    },
+    white: {
+        color: '#ffffff',
+        fontWeight: '800',
+        marginRight: '1px'
+    },
+    green: {
+        color: '#008037',
+        fontWeight: '800',
+        marginRight: '1px'
     },
     link: {
         '&:hover': {
@@ -45,7 +63,7 @@ const ButtonAppBar = (props) => {
             <AppBar position="static" elevation={0} >
                 <Toolbar>
                     <Typography variant="h5" className={classes.title}>
-                        MyVaccineNotifier
+                        my<span className={classes.orange}>va</span><span className={classes.white}>cci</span><span className={classes.green}>ne</span>notifier.me
                         {/* <img className={classes.logo} src="./logo.png" alt="logo" /> */}
                     </Typography>
                     <div className={classes.icons}>

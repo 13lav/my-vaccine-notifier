@@ -12,7 +12,7 @@ export const notifier = (data, message, center, session) => {
     }
 
     const notificationData = {
-        title: 'Vaccine Available',
+        title: 'Vaccine Available | PIN: ' + docs.center.pincode,
         body: message,
         docs: JSON.stringify(docs)
     };

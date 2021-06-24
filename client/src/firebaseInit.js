@@ -11,8 +11,14 @@ var firebaseConfig = {
     appId: config.REACT_APP_APP_ID,
 };
 
-firebase.initializeApp(firebaseConfig);
-const messaging = firebase.messaging();
+let messaging = null
+
+if (firebase.messaging.isSupported()) {
+    firebase.initializeApp(firebaseConfig)
+    messaging = firebase.messaging()
+} else {
+    console.log('no-support :(')
+}
 
 export const requestFirebaseNotificationPermission = (setTokenFound) =>
     new Promise((resolve, reject) => {
