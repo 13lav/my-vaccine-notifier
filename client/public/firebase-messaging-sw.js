@@ -42,7 +42,7 @@ messaging.setBackgroundMessageHandler(function (payload) {
 
 self.addEventListener('notificationclick', function (event) {
     let url = 'https://selfregistration.cowin.gov.in/';
-    event.notification.close(); // Android needs explicit close.
+    //event.notification.close(); // Android needs explicit close.
     event.waitUntil(
         clients.matchAll({ type: 'window' }).then(windowClients => {
             // Check if there is already a window/tab open with the target URL
