@@ -10,8 +10,8 @@ rejson(redis);
 const client = redis.createClient();
 
 export const updateCentersCache = (centers) => {
-    if (centers.length)
-        console.log(centers[0].state_name)
+    // if (centers.length)
+    //     console.log(centers[0].state_name)
 
     centers.forEach(center => {
 
@@ -68,20 +68,23 @@ export const checkNewSession = (notifiers) => {
                     let center = JSON.parse(value)
                     center.sessions.forEach(session => {
                         //let session_id = '$' + session.session_id
-                        client.json_get('sessions', `["${session.session_id}"]`, (err, data) => {
-                            if (err) {
-                                //console.log(err);
-                                //if (data == null) {
+                        if (session.available_capacity > 9) {
+                            client.json_get('sessions', `["${session.session_id}"]`, (err, data) => {
+                                if (err) {
+                                    //console.log(err);
+                                    //if (data == null) {
 
-                                notify(notifier, center, session)
-                                client.json_set('sessions', `["${session.session_id}"]`, JSON.stringify(session), (e) => {
-                                    if (e)
-                                        console.log(e);
-                                    console.log("new session at ", center.name, session.session_id)
-                                })
-                                //}
-                            }
-                        })
+                                    notify(notifier, center, session)
+
+                                    client.json_set('sessions', `["${session.session_id}"]`, JSON.stringify(session), (e) => {
+                                        if (e)
+                                            console.log(e);
+                                        console.log("new session at ", center.name, session.session_id)
+                                    })
+                                    //}
+                                }
+                            })
+                        }
                     })
                 }
             });
