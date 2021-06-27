@@ -33,9 +33,11 @@ const getCenters = async (id) => {
         console.log(err)
     }
 }
-
+var numDistricts
 const getByState = async (states, callback) => {
     await states.forEach(async (state) => {
+        numDistricts += state.districts.length
+        console.log(numDistricts)
         try {
             await state.districts.forEach(async (district) => {
                 await getCenters(district.district_id).then(async (data) => {
@@ -57,14 +59,20 @@ const getByState = async (states, callback) => {
     })
 }
 
-const fetchCenters = async () => {
+const fetchCenters = async (callback) => {
     centers = [];   //clear centers list
+    var districtFetched = 0
     try {
         await getByState(states, () => {
+            districtFetched++
             if (centers.length)
-                console.log('cache called', centers[0].state_name)
+                console.log(districtFetched, '. cache called', centers[0].state_name)
             //updateTrackerDB(centers)
             updateCentersCache(centers)
+
+            if (districtFetched === numDistricts)
+                callback()
+
         })
     } catch (err) {
         console.log(err)
@@ -85,13 +93,13 @@ const tracker = (seconds) => {
                 console.log(err)
             else notifiers = data
             console.log(notifiers.length)
-            checkNewSession(notifiers)
+            //checkNewSession(notifiers)
         })
-
+        numDistricts = 0
         try {
-            fetchCenters().then(() => {
-                console.log(notifiers)
-                //checkNewSession(notifiers)
+            fetchCenters(() => {
+                //console.log(notifiers)
+                checkNewSession(notifiers)
             })
         } catch (err) {
             console.log(err)

@@ -55,7 +55,7 @@ const notify = (notifierData, center, session) => {
 }
 
 export const checkNewSession = (notifiers) => {
-    console.log(notifiers.length)
+    console.log('checkNewSession', notifiers.length)
 
     var i = 1
     notifiers.forEach((notifier) => {
@@ -64,9 +64,7 @@ export const checkNewSession = (notifiers) => {
         //console.log(id)
         try {
             client.json_get('centers', id, (error, value) => {
-                if (error)
-                    console.log(i++, id, 'not present');
-                else if (value != null) {
+                if (!error && value != null) {
                     let center = JSON.parse(value)
                     center.sessions.forEach(session => {
                         //let session_id = '$' + session.session_id
