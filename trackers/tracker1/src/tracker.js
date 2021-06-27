@@ -1,9 +1,6 @@
 import fetch from 'node-fetch';
 import states from './data/states.js'
 import { updateTrackerDB } from './controllers/center.js'
-import { updateCentersCache } from './controllers/cache.js'
-import { checkNewSession } from './controllers/cache.js'
-import Notifier from './models/notifier.js';
 
 var centers = [];
 
@@ -33,11 +30,9 @@ const getCenters = async (id) => {
         console.log(err)
     }
 }
-var numDistricts
+
 const getByState = async (states, callback) => {
     await states.forEach(async (state) => {
-        numDistricts += state.districts.length
-        console.log(numDistricts)
         try {
             await state.districts.forEach(async (district) => {
                 await getCenters(district.district_id).then(async (data) => {
@@ -59,53 +54,20 @@ const getByState = async (states, callback) => {
     })
 }
 
-const fetchCenters = async (callback) => {
-    centers = [];   //clear centers list
-    var districtFetched = 0
-    try {
-        await getByState(states, () => {
-            districtFetched++
-            if (centers.length)
-                console.log(districtFetched, '. cache called', centers[0].state_name)
-            //updateTrackerDB(centers)
-            updateCentersCache(centers)
-
-            if (districtFetched === numDistricts)
-                callback()
-
-        })
-    } catch (err) {
-        console.log(err)
-    }
-}
-
 const tracker = (seconds) => {
-
     function callAgain() {
-
         var now = new Date();
         console.log('Called at - ', now.toLocaleString(undefined, { timeZone: 'Asia/Kolkata' }))
-
-        var notifiers = [];
-
-        Notifier.find({}, function (err, data) {
-            if (err)
-                console.log(err)
-            else notifiers = data
-            console.log(notifiers.length)
-            //checkNewSession(notifiers)
-        })
-        numDistricts = 0
+        centers = [];   //clear centers list
         try {
-            fetchCenters(() => {
-                //console.log(notifiers)
-                checkNewSession(notifiers)
+            getByState(states, () => {
+                //console.log('db called')
+                updateTrackerDB(centers)
             })
         } catch (err) {
             console.log(err)
         }
-
-        //setTimeout(callAgain, 1000 * seconds);
+        setTimeout(callAgain, 1000 * seconds);
     }
 
     callAgain();

@@ -54,8 +54,7 @@ const getNewSessions = (center, notifierData) => {
                 if (doc.upserted) {
                     console.log('---', center.name, session.session_id)
                     console.log(session.date, center.state_name, center.pincode, "--", session.min_age_limit, session.vaccine, session.available_capacity, now.toLocaleString(undefined, { timeZone: 'Asia/Kolkata' }))
-                    var content = center.name + ' | ' + session.vaccine + '(' + session.min_age_limit + '+) | ' + session.available_capacity + ' Slots'
-                    //var content = center.name + ' ' + center.pincode + ' ' + session.min_age_limit + ' ' + session.vaccine + ' ' + session.available_capacity
+                    var content = center.name + ' ' + center.pincode + ' ' + session.min_age_limit + ' ' + session.vaccine + ' ' + session.available_capacity
                     if (notifierData) {
                         notifierData.users.forEach((id) => {
                             try {
@@ -63,7 +62,7 @@ const getNewSessions = (center, notifierData) => {
                                     if (err)
                                         console.log(err)
                                     if (doc)
-                                        notifier(doc, content, center, session)
+                                        notifier(doc, content)
                                 });
                             } catch (e) {
                                 console.error(e);
@@ -85,7 +84,7 @@ export const updateTrackerDB = (centers) => {
                 if (err)
                     console.log(err);
                 if (doc)
-                    getNewSessions(center, doc);
+		    getNewSessions(center, doc);
             });
             addCenter(center)
         } catch (e) {
