@@ -27,12 +27,14 @@ messaging.setBackgroundMessageHandler(function (payload) {
     if (now - docs.timeCreated > 1800000)
         return null
 
+    var tag = docs.center.address + docs.session.min_age_limit.toString() + docs.session.vaccine.toString()
+
     const notificationOptions = {
         body: payload.data.body,
         icon: new URL('https://emojipedia-us.s3.dualstack.us-west-1.amazonaws.com/thumbs/120/twitter/282/syringe_1f489.png'),
         timestamp: docs.timeCreated,
         vibrate: [300, 100, 400],
-        tag: docs.center.name.slice(0, docs.center.name.length / 2)
+        tag: tag
     };
     console.log(notificationOptions)
 
