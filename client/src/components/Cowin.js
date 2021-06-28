@@ -119,6 +119,79 @@ export default function Cowin() {
     const [paid, setPaid] = useState('');
     const [notifier, setNotifier] = useState(false);
 
+    const checkVaccine = (center) => {
+        var vac1 = false
+        var vac2 = false
+        var vac3 = false
+
+        center.sessions.forEach((session) => {
+            if (session.vaccine.includes(covaxin))
+                vac1 = true
+            if (session.vaccine.includes(covishield))
+                vac2 = true
+            if (session.vaccine.includes(sputnik))
+                vac3 = true
+        })
+
+        return vac1 && vac2 && vac3
+    }
+
+    const checkAge = (center) => {
+        var age = false
+
+        center.sessions.forEach((session) => {
+            if (session.min_age_limit > minAge && session.min_age_limit < maxAge)
+                age = true
+        })
+
+        return age
+    }
+
+    const printVaccines = (center) => {
+        var text = ''
+        var vac1 = false
+        var vac2 = false
+        var vac3 = false
+
+        center.sessions.forEach((session) => {
+            if (session.vaccine.includes('COVAXIN'))
+                vac1 = true
+            if (session.vaccine.includes('COVISHIELD'))
+                vac2 = true
+            if (session.vaccine.includes('SUPTNIK'))
+                vac3 = true
+        })
+
+        if (vac1 === true)
+            text = text + 'COVAXIN '
+        if (vac2 === true)
+            text = text + 'COVISHIELD '
+        if (vac3 === true)
+            text = text + 'SUPTNIK'
+
+        return text
+    }
+
+    const printAges = (center) => {
+        var text = ''
+        var age45 = false
+        var age18 = false
+
+        center.sessions.forEach((session) => {
+            if (session.min_age_limit === 45)
+                age45 = true
+            if (session.min_age_limit === 18)
+                age18 = true
+        })
+
+        if (age18 === true)
+            text = text + '18 '
+        if (age45 === true)
+            text = text + '45 '
+
+        return text
+    }
+
     const handleNotifier = () => {
         setNotifier(true);
     };
@@ -418,19 +491,15 @@ export default function Cowin() {
                         <TableBody>
                             {centers.filter(nextCenter => nextCenter.address.toLowerCase().includes(filterText.toLowerCase()) ||
                                 nextCenter.name.toLowerCase().includes(filterText.toLowerCase()))
-                                .filter(item =>
-                                    item.vaccine.includes(covaxin) && item.vaccine.includes(covishield) &&
-                                    item.vaccine.includes(sputnik))
-                                .filter(data =>
-                                    data.fee_type.includes(free) && data.fee_type.includes(paid))
-                                .filter(obj =>
-                                    obj.min_age_limit > minAge && obj.min_age_limit < maxAge)
+                                .filter(item => checkVaccine(item))
+                                .filter(data => data.fee_type.includes(free) && data.fee_type.includes(paid))
+                                .filter(obj => checkAge(obj))
                                 .map((center, idx) => {
                                     return <TableRow key={center.id}>
                                         <TableCell>{center.name}</TableCell>
                                         <TableCell className={classes.address} >{center.address}</TableCell>
-                                        <TableCell align="right">{center.vaccine}</TableCell>
-                                        <TableCell align="right">{center.min_age_limit}</TableCell>
+                                        <TableCell align="right">{printVaccines(center)}</TableCell>
+                                        <TableCell align="right">{printAges(center)}</TableCell>
                                         <TableCell align="right">{center.fee_type}</TableCell>
                                         <TableCell>
                                             {list.includes(center._id) ? <Button color="secondary" onClick={() => { addToList(center._id) }} >Remove</Button> : <Button color="primary" onClick={() => { addToList(center._id) }} >Add</Button>}</TableCell>
