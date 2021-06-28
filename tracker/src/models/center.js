@@ -7,6 +7,10 @@ const centerSchema = new mongoose.Schema({
         type: Number,
         required: true
     },
+    center_id: {
+        type: Number,
+        required: true
+    },
     name: {
         type: String,
         minLength: 2,
@@ -39,52 +43,44 @@ const centerSchema = new mongoose.Schema({
     long: {
         type: Number,
     },
+    from: {
+        type: String,
+    },
+    to: {
+        type: String,
+    },
     fee_type: {
         type: String,
         required: true,
     },
-    vaccine: {
-        type: String,
-        required: true,
-    },
-    min_age_limit: {
-        type: Number,
-    },
-    // sessions: [
-    //     {
-    //         session_id: {
-    //             type: String,
-    //             required: true,
-    //         },
-    //         date: {
-    //             type: String,
-    //             required: true,
-    //         },
-    //         available_capacity: {
-    //             type: Number,
-    //         },
-    //         min_age_limit: {
-    //             type: Number,
-    //         },
-    //         vaccine: {
-    //             type: String,
-    //             required: true,
-    //         },
-    //         available_capacity_dose1: {
-    //             type: Number,
-    //         },
-    //         available_capacity_dose2: {
-    //             type: Number,
-    //         },
-    //     }
-    // ],
-    // users: [
-    //     {
-    //         type: mongoose.SchemaTypes.ObjectId,
-    //         required: true,
-    //         ref: 'User'
-    //     },
-    // ]
+    sessions: [
+        {
+            session_id: {
+                type: String,
+                required: true,
+            },
+            date: {
+                type: String,
+                required: true,
+            },
+            available_capacity: {
+                type: Number,
+            },
+            min_age_limit: {
+                type: Number,
+            },
+            vaccine: {
+                type: String,
+                required: true,
+            },
+            available_capacity_dose1: {
+                type: Number,
+            },
+            available_capacity_dose2: {
+                type: Number,
+            },
+        }
+    ]
 }, { timestamps: true }, { strict: false });
 
 const Center = mongoose.model('Center', centerSchema);

@@ -1,9 +1,16 @@
 import fetch from 'node-fetch';
 import states from './data/states.js'
-import { updateTrackerDB } from './controllers/center.js'
+//import { updateTrackerDB } from './controllers/center.js'
 import { updateCentersCache } from './controllers/cache.js'
 import { checkNewSession } from './controllers/cache.js'
 import Notifier from './models/notifier.js';
+import Center from './models/center.js';
+
+import redis from 'redis';
+import rejson from 'redis-rejson';
+
+rejson(redis);
+const client = redis.createClient();
 
 var centers = [];
 
@@ -109,6 +116,42 @@ const tracker = (seconds) => {
     }
 
     callAgain();
+
+    function updateCenters() {
+        client.json_get('centers', '.', (error, object) => {
+            if (error)
+                console.log(error)
+            else {
+
+                console.log('updating centers')
+                let centers = JSON.parse(object)
+                console.log(Object.keys(centers).length)
+
+                var bulkCenters = []
+
+                for (var center in centers) {
+
+                    let upsertDoc = {
+                        updateOne: {
+                            filter: { _id: centers[center].center_id },
+                            update: centers[center],
+                            upsert: true,
+                        }
+                    };
+                    bulkCenters.push(upsertDoc);
+                }
+
+                Center.bulkWrite(bulkCenters)
+                    .then(bulkWriteOpResult => console.log('BULK update OK:', bulkWriteOpResult))
+                    .catch(console.error.bind(console, 'BULK update error:'))
+
+                setTimeout(callAgain, 3 * 60 * 1000 * seconds);
+            }
+        })
+    }
+
+    updateCenters()
+
 }
 
 export default tracker;
