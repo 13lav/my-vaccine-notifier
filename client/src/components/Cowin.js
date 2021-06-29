@@ -24,7 +24,6 @@ import Alert from '@material-ui/lab/Alert';
 import ByDistrict from './ByDistrict';
 import ByPIN from './ByPIN';
 import ByLocation from './ByLocation';
-import Footer from './Footer';
 import { config } from '../config/config.js';
 
 const useStyles = makeStyles((theme) => ({
@@ -510,7 +509,6 @@ export default function Cowin() {
                     </Table>
                     {centers.length === 0 ? <Typography variant="h5" className={classes.title} > No Centers Available </Typography> : <div></div>}
                 </TableContainer> </div> : <div className={classes.fill}></div>}
-            <Footer />
         </Container >
     );
 }

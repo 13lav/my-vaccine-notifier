@@ -29,8 +29,6 @@ const useStyles = makeStyles((theme) => ({
     root: {
         display: 'flex',
         flexDirection: 'column',
-        width: '108%',
-        marginLeft: '-4%'
     },
     main: {
         marginTop: theme.spacing(1),
