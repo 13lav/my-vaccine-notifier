@@ -145,7 +145,7 @@ const tracker = (seconds) => {
                     .then(bulkWriteOpResult => console.log('BULK update OK:', bulkWriteOpResult))
                     .catch(console.error.bind(console, 'BULK update error:'))
 
-                setTimeout(callAgain, 3 * 60 * 1000 * seconds);
+                setTimeout(updateCenters, 3 * 60 * 1000 * seconds);
             }
         })
     }
