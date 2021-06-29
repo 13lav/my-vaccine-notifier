@@ -6,14 +6,22 @@ import Link from '@material-ui/core/Link';
 
 function Copyright() {
     return (
-        <Typography variant="body2" color="textSecondary">
-            {'Copyright © '}
-            <Link color="inherit" href="https://github.com/13lav" target="_blank" >
-                13lav
+        <div>
+            <Typography variant="body2" color="textSecondary">
+                {'Copyright © '}
+                <Link color="inherit" href="https://github.com/13lav" target="_blank" >
+                    13lav
       </Link>{' '}
-            {new Date().getFullYear()}
-            {'.'}
-        </Typography>
+                {new Date().getFullYear()}
+                {'.'}
+            </Typography>
+            <Typography variant="body2" color="textSecondary">
+                {'Write to us at '}
+                <Link color="secondary" href="mailto:webmaster@example.com" target="_blank" >
+                    myvaccinenotifier.me@gmail.com
+            </Link>
+            </Typography>
+        </div>
     );
 }
 
@@ -21,8 +29,6 @@ const useStyles = makeStyles((theme) => ({
     root: {
         display: 'flex',
         flexDirection: 'column',
-        width: '108%',
-        marginLeft: '-4%'
     },
     main: {
         marginTop: theme.spacing(1),
