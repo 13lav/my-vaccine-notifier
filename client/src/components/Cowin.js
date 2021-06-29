@@ -157,7 +157,7 @@ export default function Cowin() {
                 vac1 = true
             if (session.vaccine.includes('COVISHIELD'))
                 vac2 = true
-            if (session.vaccine.includes('SUPTNIK'))
+            if (session.vaccine.includes('SPUTNIK'))
                 vac3 = true
         })
 
@@ -166,7 +166,7 @@ export default function Cowin() {
         if (vac2 === true)
             text = text + 'COVISHIELD '
         if (vac3 === true)
-            text = text + 'SUPTNIK'
+            text = text + 'SPUTNIK'
 
         return text
     }
