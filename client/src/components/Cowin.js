@@ -25,6 +25,7 @@ import ByDistrict from './ByDistrict';
 import ByPIN from './ByPIN';
 import ByLocation from './ByLocation';
 import { config } from '../config/config.js';
+import Badge from '@material-ui/core/Badge';
 
 const useStyles = makeStyles((theme) => ({
     paper: {
@@ -96,6 +97,9 @@ const useStyles = makeStyles((theme) => ({
     },
     table: {
         background: 'none'
+    },
+    badge: {
+        width: '100%'
     }
 }));
 
@@ -289,15 +293,19 @@ export default function Cowin() {
             <div className={classes.paper}>
                 <Tabs value={tab} setValue={setTab} />
                 {getContent(tab)}
-                {(tab !== 2) ? <Button
-                    type="submit"
-                    variant="contained"
-                    color="primary"
-                    className={classes.notify}
-                    onClick={handleOpen}
-                >
-                    Notify Me
-                </Button> : <div></div>}
+                {(tab !== 2) ?
+                    <Badge badgeContent={list.length} className={classes.badge} color="error" fullWidth>
+                        <Button
+                            type="submit"
+                            variant="contained"
+                            color="primary"
+                            className={classes.notify}
+                            onClick={handleOpen}
+                            fullWidth
+                        >
+                            Notify Me
+                    </Button>
+                    </Badge> : <div></div>}
                 <Snackbar open={notifier} autoHideDuration={6000} onClose={closeNotifier}>
                     <Alert onClose={closeNotifier} severity="success">
                         Congrats!! Your Vaccine Notifier has been  Deployed Successfully...

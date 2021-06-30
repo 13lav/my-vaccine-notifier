@@ -143,15 +143,28 @@ const User = (props) => {
                         >
                             Allow Notifications
                         </Button> :
-                        <Button
-                            type="submit"
-                            fullWidth
-                            variant="contained"
-                            color={(values.deviceToken === 'wait') ? 'secondary' : 'primary'}
-                            className={classes.submit}
-                            onClick={clickSubmit}
-                        >
-                            {(values.deviceToken === 'wait') ? 'Loading...' : 'Set Notifier'}
+                        (values.deviceToken === 'wait') ?
+                            <Button
+                                //type="submit"
+                                fullWidth
+                                variant="contained"
+                                //color={(values.deviceToken === 'wait') ? 'secondary' : 'primary'}
+                                className={classes.submit}
+                                //onClick={clickSubmit}
+                                disabled='true'
+                            >
+                                Loading...
+                        </Button> :
+                            <Button
+                                type="submit"
+                                fullWidth
+                                variant="contained"
+                                color='primary'
+                                className={classes.submit}
+                                onClick={clickSubmit}
+                            //disabled={(values.deviceToken === 'wait') ? 'false' : 'true'}
+                            >
+                                Set Notifier
                         </Button>
                     }
                 </form>

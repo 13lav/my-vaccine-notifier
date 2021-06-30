@@ -24,7 +24,7 @@ messaging.setBackgroundMessageHandler(function (payload) {
     console.log(now)
     console.log(now - docs.timeCreated)
 
-    if (now - docs.timeCreated > 1800000)
+    if (now - docs.timeCreated > 3600000 * 12)
         return null
 
     var tag = docs.center.address + docs.session.min_age_limit.toString() + docs.session.vaccine.toString()
