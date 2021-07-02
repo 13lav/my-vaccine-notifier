@@ -14,7 +14,8 @@ export const sendNotificationToClient = (tokens, data) => {
                 .length;
             console.log(
                 'Notifications sent:',
-                `${successes} successful, ${failures} failed`
+                `${successes} successful, ${failures} failed -`,
+                data.title
             );
         })
         .catch(error => {

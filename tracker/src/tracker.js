@@ -37,7 +37,7 @@ const getCenters = async (id) => {
         //console.log(res)
         return res
     } catch (err) {
-        console.log(err)
+        console.log('Fetch Error -', id)
     }
 }
 var numDistricts
@@ -54,7 +54,7 @@ const getByState = async (states, callback) => {
                             centers = [...centers, center]
                         })
                     } catch (err) {
-                        console.log(err)
+                        console.log('No centers at Dist. No.', district.district_id, 'in', state.state_name)
                     }
                 })
                 callback()
@@ -150,7 +150,7 @@ const tracker = (seconds) => {
         })
     }
 
-    updateCenters()
+    //    updateCenters()
 
 }
 
