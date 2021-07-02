@@ -32,7 +32,7 @@ export const updateCentersCache = (centers) => {
 
 const notify = (notifierData, center, session) => {
 
-    var content = center.name + ' | ' + session.vaccine + '(' + session.min_age_limit + '+) | ' + 'Dose1: ' + session.available_capacity_dose1 + 'Slots | Dose2: ' + session.available_capacity_dose2 + 'Slots | ' + session.date
+    var content = center.name + ' | ' + session.vaccine + '(' + session.min_age_limit + '+) | ' + 'Dose1: ' + session.available_capacity_dose1 + ' | Dose2: ' + session.available_capacity_dose2 + ' | ' + session.date
 
     if (notifierData) {
         notifierData.users.forEach((id) => {
