@@ -91,7 +91,8 @@ const tracker = (seconds) => {
     function callAgain() {
 
         var now = new Date();
-        console.log('Called at - ', now.toLocaleString(undefined, { timeZone: 'Asia/Kolkata' }))
+        var dateTime = now.toLocaleString(undefined, { timeZone: 'Asia/Kolkata' })
+        console.log('Called at - ', dateTime)
 
         var notifiers = [];
 
@@ -106,7 +107,7 @@ const tracker = (seconds) => {
         try {
             fetchCenters(() => {
                 //console.log(notifiers)
-                checkNewSession(notifiers)
+                checkNewSession(notifiers, dateTime)
             })
         } catch (err) {
             console.log(err)

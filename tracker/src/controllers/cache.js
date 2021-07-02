@@ -54,7 +54,7 @@ const notify = (notifierData, center, session) => {
 
 }
 
-export const checkNewSession = (notifiers) => {
+export const checkNewSession = (notifiers, time) => {
     console.log('checkNewSession', notifiers.length)
 
     var i = 1
@@ -74,12 +74,13 @@ export const checkNewSession = (notifiers) => {
                                     //console.log(err);
                                     //if (data == null) {
 
-                                    notify(notifier, center, session)
-
                                     client.json_set('sessions', `["${session.session_id}"]`, JSON.stringify(session), (e) => {
                                         if (e)
                                             console.log(e);
-                                        console.log("new session at ", center.name, session.session_id)
+
+                                        console.log(time, "new session at ", center.name, session.session_id)
+
+                                        notify(notifier, center, session)
                                     })
                                     //}
                                 }
