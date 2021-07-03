@@ -97,6 +97,11 @@ const tracker = (seconds) => {
 
     function callAgain() {
 
+        client.json_set('centers', '.', '{}', (error, object) => {
+            if (error)
+                console.log(error)
+        })
+
         var now = new Date();
         var dateTime = now.toLocaleString(undefined, { timeZone: 'Asia/Kolkata' })
         console.log(dateTime, '- called')
