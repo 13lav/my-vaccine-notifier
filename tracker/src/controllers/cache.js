@@ -9,11 +9,11 @@ rejson(redis);
 
 const client = redis.createClient();
 
-export const updateCentersCache = (centers) => {
+export const updateCentersCache = (centers, callback) => {
     // if (centers.length)
     //     console.log(centers[0].state_name)
-
-    centers.forEach(center => {
+    var count = 0
+    centers.forEach((center) => {
 
         let id = '$' + center.center_id.toString()
 
@@ -21,6 +21,9 @@ export const updateCentersCache = (centers) => {
             client.json_set('centers', id, JSON.stringify(center), (err) => {
                 if (err)
                     console.log(err);
+                count++
+                if (count == centers.length)
+                    callback()
                 //console.log(center.state_name)
             });
         } catch (e) {
@@ -55,9 +58,10 @@ const notify = (notifierData, center, session) => {
 }
 
 export const checkNewSession = (notifiers, time) => {
-    console.log('checkNewSession', notifiers.length)
+    console.log(time, 'checkNewSession', notifiers.length)
 
-    var i = 1
+    var count = 0
+
     notifiers.forEach((notifier) => {
 
         let id = '$' + notifier._id.toString()
@@ -88,7 +92,12 @@ export const checkNewSession = (notifiers, time) => {
                         }
                     })
                 }
+                count++
+
+                if (count == notifiers.length)
+                    console.log(time, 'Sessions Updated!!!', notifiers.length)
             });
+
         } catch (e) {
             console.error(e);
         }

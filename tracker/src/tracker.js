@@ -69,16 +69,23 @@ const getByState = async (states, callback) => {
 const fetchCenters = async (callback) => {
     centers = [];   //clear centers list
     var districtFetched = 0
+    var count = 0
     try {
         await getByState(states, () => {
             districtFetched++
             if (centers.length)
-                //console.log(districtFetched, '. cache called', centers[0].state_name)
-                //updateTrackerDB(centers)
-                updateCentersCache(centers)
+                updateCentersCache(centers, () => {
+                    count++
+                    //console.log(count, '===', numDistricts)
+                    if (count === numDistricts)
+                        callback()
+                })
+            else numDistricts--
+            //console.log(districtFetched, '. cache called', centers[0].state_name)
+            //updateTrackerDB(centers)
 
-            if (districtFetched === numDistricts)
-                callback()
+            // if (districtFetched === numDistricts)
+            //     callback(numDistricts)
 
         })
     } catch (err) {
@@ -92,7 +99,7 @@ const tracker = (seconds) => {
 
         var now = new Date();
         var dateTime = now.toLocaleString(undefined, { timeZone: 'Asia/Kolkata' })
-        console.log('Called at - ', dateTime)
+        console.log(dateTime, '- called')
 
         var notifiers = [];
 
@@ -106,7 +113,7 @@ const tracker = (seconds) => {
         numDistricts = 0
         try {
             fetchCenters(() => {
-                //console.log(notifiers)
+                //console.log('Centers Fetching & Update Complete !!!')
                 checkNewSession(notifiers, dateTime)
             })
         } catch (err) {
