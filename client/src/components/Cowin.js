@@ -273,9 +273,18 @@ export default function Cowin() {
     const addAll = () => {
         const newList = [];
 
-        centers.forEach(center => {
-            newList.push(center._id)
-        })
+        // centers.forEach(center => {
+        //     newList.push(center._id)
+        // })
+
+        centers.filter(nextCenter => nextCenter.address.toLowerCase().includes(filterText.toLowerCase()) ||
+            nextCenter.name.toLowerCase().includes(filterText.toLowerCase()))
+            .filter(item => checkVaccine(item))
+            .filter(data => data.fee_type.includes(free) && data.fee_type.includes(paid))
+            .filter(obj => checkAge(obj))
+            .forEach((center, idx) => {
+                newList.push(center._id)
+            })
 
         setList(newList)
         console.log(list)
