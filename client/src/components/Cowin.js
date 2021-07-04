@@ -274,7 +274,7 @@ export default function Cowin() {
         }
 
         setList(newList)
-        console.log(list)
+        //console.log(list)
     }
 
     const addAll = () => {
@@ -294,13 +294,13 @@ export default function Cowin() {
             })
 
         setList(newList)
-        console.log(list)
+        //console.log(list)
     }
 
     const resetList = () => {
         const newList = [];
         setList(newList)
-        console.log(list)
+        //console.log(list)
     }
 
     return (
