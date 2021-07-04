@@ -36,6 +36,7 @@ const ByDistrict = (props) => {
 
     const [state, setState] = useState({ districts: [] });
     const [district, setDistrict] = useState('Select District');
+    const [loading, setLoading] = useState(false)
 
 
     const handleState = (event) => {
@@ -62,6 +63,7 @@ const ByDistrict = (props) => {
             let res = await response.json()
             console.log(res)
             props.setCenters(res.data)
+            setLoading(false)
             return res
         } catch (err) {
             console.log(err)
@@ -72,6 +74,7 @@ const ByDistrict = (props) => {
     const clickSubmit = async (event) => {
         event.preventDefault();
         getByDistrict(district)
+        setLoading(true)
     }
 
     return (
@@ -140,11 +143,11 @@ const ByDistrict = (props) => {
                     type="submit"
                     fullWidth
                     variant="contained"
-                    color="secondary"
+                    color={(loading) ? "primary" : "secondary"}
                     className={classes.submit}
                     onClick={clickSubmit}
                 >
-                    Find Centers
+                    {(loading) ? 'Finding...' : 'Find Centers'}
                 </Button>
             </form>
         </div>

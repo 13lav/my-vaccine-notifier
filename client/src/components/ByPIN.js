@@ -25,6 +25,7 @@ const ByPIN = (props) => {
     const classes = useStyles();
 
     const [pin, setPin] = useState(110001)
+    const [loading, setLoading] = useState(false)
 
     const handleChange = event => {
         setPin(event.target.value)
@@ -42,6 +43,7 @@ const ByPIN = (props) => {
             let res = await response.json()
             console.log(res)
             props.setCenters(res.data)
+            setLoading(false)
             return res
         } catch (err) {
             console.log(err)
@@ -51,6 +53,7 @@ const ByPIN = (props) => {
     const clickSubmit = async (event) => {
         event.preventDefault();
         getByPIN(pin)
+        setLoading(true)
     }
 
     return (
@@ -72,11 +75,11 @@ const ByPIN = (props) => {
                     type="submit"
                     fullWidth
                     variant="contained"
-                    color="secondary"
+                    color={(loading) ? "primary" : "secondary"}
                     className={classes.submit}
                     onClick={clickSubmit}
                 >
-                    Find Centers
+                    {(loading) ? 'Finding...' : 'Find Centers'}
                 </Button>
             </form>
         </div>

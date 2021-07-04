@@ -30,6 +30,8 @@ const useStyles = makeStyles((theme) => ({
     },
     image: {
         width: '100%',
+        borderRadius: '16px',
+        marginTop: '32px'
     },
 }));
 
