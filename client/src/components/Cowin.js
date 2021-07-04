@@ -100,6 +100,13 @@ const useStyles = makeStyles((theme) => ({
     },
     badge: {
         width: '100%'
+    },
+    addedRow: {
+        backgroundColor: theme.palette.primary.light,
+        opacity: '0.9',
+    },
+    row: {
+
     }
 }));
 
@@ -511,7 +518,7 @@ export default function Cowin() {
                                 .filter(data => data.fee_type.includes(free) && data.fee_type.includes(paid))
                                 .filter(obj => checkAge(obj))
                                 .map((center, idx) => {
-                                    return <TableRow key={center.id}>
+                                    return <TableRow key={center.id} className={list.includes(center._id) ? classes.addedRow : classes.row}>
                                         <TableCell>{center.name}</TableCell>
                                         <TableCell className={classes.address} >{center.address}</TableCell>
                                         <TableCell align="right">{printVaccines(center)}</TableCell>
