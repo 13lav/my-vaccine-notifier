@@ -97,10 +97,6 @@ const tracker = (seconds) => {
 
     function callAgain() {
 
-        client.json_set('centers', '.', '{}', (error, object) => {
-            if (error)
-                console.log(error)
-        })
 
         var now = new Date();
         var dateTime = now.toLocaleString(undefined, { timeZone: 'Asia/Kolkata' })
@@ -130,15 +126,23 @@ const tracker = (seconds) => {
 
     callAgain();
 
-    function updateCenters() {
+}
+
+export const updateCenters = (seconds) => {
+
+    function callAgain() {
+
         client.json_get('centers', '.', (error, object) => {
             if (error)
                 console.log(error)
             else {
 
-                console.log('updating centers')
                 let centers = JSON.parse(object)
-                console.log(Object.keys(centers).length)
+
+                var now = new Date();
+                var dateTime = now.toLocaleString(undefined, { timeZone: 'Asia/Kolkata' })
+
+                console.log('Updating CentersDB', Object.keys(centers).length, dateTime)
 
                 var bulkCenters = []
 
@@ -158,13 +162,14 @@ const tracker = (seconds) => {
                     .then(bulkWriteOpResult => console.log('BULK update OK:', bulkWriteOpResult))
                     .catch(console.error.bind(console, 'BULK update error:'))
 
-                setTimeout(updateCenters, 3 * 60 * 1000 * seconds);
+                const time = (60 * 1000 * seconds)
+                setTimeout(callAgain, time);
             }
         })
+
     }
 
-    //    updateCenters()
+    callAgain()
 
 }
-
 export default tracker;

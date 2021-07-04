@@ -1,7 +1,7 @@
 import mongoose from 'mongoose';
 import { config } from './config/config.js';
 import tracker from './tracker.js';
-import { sendNotificationToClient } from './notify.js';
+import { updateCenters } from './tracker.js';
 
 const connect = async (url) => {
     await mongoose.connect(
@@ -21,4 +21,5 @@ const connect = async (url) => {
 export const start = async () => {
     await connect(config.DB_URL);
     tracker(60);
+    updateCenters(60)
 }
