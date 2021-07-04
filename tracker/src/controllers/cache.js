@@ -61,6 +61,22 @@ export const checkNewSession = (notifiers, time) => {
     console.log(time, 'checkNewSession', notifiers.length)
 
     var count = 0
+    var d = new Date(),
+        month = '' + (d.getMonth() + 1),
+        day = '' + (d.getDate() - 1),
+        year = d.getFullYear();
+
+    if (month.length < 2)
+        month = '0' + month;
+    if (day.length < 2)
+        day = '0' + day;
+
+    const today = parseInt(year + month + day);
+
+    function dateToInt(myDate) {
+        myDate = myDate.split("-");
+        return parseInt(myDate[2] + myDate[1] + myDate[0]);
+    }
 
     notifiers.forEach((notifier) => {
 
@@ -72,7 +88,7 @@ export const checkNewSession = (notifiers, time) => {
                     let center = JSON.parse(value)
                     center.sessions.forEach(session => {
                         //let session_id = '$' + session.session_id
-                        if (session.available_capacity > 9) {
+                        if (session.available_capacity > 9 && dateToInt(session.date) > today) {
                             client.json_get('sessions', `["${session.session_id}"]`, (err, data) => {
                                 if (err) {
                                     //console.log(err);

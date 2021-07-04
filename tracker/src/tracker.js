@@ -97,6 +97,10 @@ const tracker = (seconds) => {
 
     function callAgain() {
 
+        client.json_set('centers', '.', '{}', (error, object) => {
+            if (error)
+                console.log(error)
+        })
 
         var now = new Date();
         var dateTime = now.toLocaleString(undefined, { timeZone: 'Asia/Kolkata' })
@@ -130,6 +134,47 @@ const tracker = (seconds) => {
 
 export const updateCenters = (seconds) => {
 
+    function cleanSessions() {
+        var d = new Date(),
+            month = '' + (d.getMonth() + 1),
+            day = '' + (d.getDate() - 2),
+            year = d.getFullYear();
+
+        if (month.length < 2)
+            month = '0' + month;
+        if (day.length < 2)
+            day = '0' + day;
+
+        const today = parseInt(year + month + day);
+
+        client.json_get('sessions', '.', (error, object) => {
+            if (error)
+                console.log(error)
+            else {
+
+                let sessions = JSON.parse(object)
+
+                console.log(today, '- Deleting Old Sessions -', Object.keys(sessions).length)
+
+                function dateToInt(myDate) {
+                    myDate = myDate.split("-");
+                    return parseInt(myDate[2] + myDate[1] + myDate[0]);
+                }
+
+                for (var session in sessions) {
+                    var date = dateToInt(sessions[session].date)
+                    if (date < today) {
+                        client.json_del('sessions', `["${sessions[session].session_id}"]`, (err, data) => {
+                            if (err)
+                                console.log(err)
+                            else console.log(sessions[session].session_id, date, '<', today)
+                        })
+                    }
+                }
+            }
+        })
+    }
+
     function callAgain() {
 
         client.json_get('centers', '.', (error, object) => {
@@ -159,8 +204,10 @@ export const updateCenters = (seconds) => {
                 }
 
                 Center.bulkWrite(bulkCenters)
-                    .then(bulkWriteOpResult => console.log('BULK update OK:', bulkWriteOpResult))
+                    .then(bulkWriteOpResult => console.log('BULK update OK:', bulkWriteOpResult.result.nUpserted))
                     .catch(console.error.bind(console, 'BULK update error:'))
+
+                cleanSessions()
 
                 const time = (60 * 1000 * seconds)
                 setTimeout(callAgain, time);

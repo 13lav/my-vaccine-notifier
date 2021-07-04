@@ -16,7 +16,7 @@ export const sendNotificationToClient = (tokens, data) => {
             console.log(
                 'Notifications sent:',
                 `${successes} successful, ${failures} failed -`,
-                docs.center.pincode, ' - ', docs.session.session_id
+                docs.center.pincode, ' - ', docs.session.session_id, docs.session.date
             );
         })
         .catch(error => {
