@@ -26,11 +26,14 @@ const getCenters = async (id) => {
         let response = await fetch(`https://cdn-api.co-vin.in/api/v2/appointment/sessions/public/calendarByDistrict?district_id=${id}&date=${today}`, {
             method: 'GET',
             headers: {
-                'Content-Type': 'application/json',
-                // 'User-Agent': 'PostmanRuntime/7.26.8',
-                // 'Accept': '*/*',
-                // 'Accept-Encoding': 'gzip, deflate, br',
-                'Connection': 'keep-alive',
+                //'Content-Type': 'application/json',
+                'Accept': 'text/html,application/xhtml+xml,application/xml;q=0.9,*/*;q=0.8',
+                'Pragma': 'no-cache',
+                'Cache-Control': 'no-cache',
+                'Accept-Language': 'en-us',
+                'User-Agent': 'Mozilla/5.0 (Macintosh; Intel Mac OS X 10_15_5) AppleWebKit/605.1.15 (KHTML, like Gecko) Version/13.1.1 Safari/605.1.15',
+                'Upgrade-Insecure-Requests': '1',
+                //'Connection': 'keep-alive',
             },
         })
         let res = await response.json()
