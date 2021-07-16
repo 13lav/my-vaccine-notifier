@@ -5,6 +5,7 @@ import Paper from '@material-ui/core/Paper';
 import Container from '@material-ui/core/Container';
 import Typography from '@material-ui/core/Typography';
 import { makeStyles } from '@material-ui/core/styles';
+import Alert from '@material-ui/lab/Alert';
 import { requestFirebaseNotificationPermission, onMessageListener } from '../firebaseInit'
 
 const useStyles = makeStyles((theme) => ({
@@ -133,16 +134,19 @@ const User = (props) => {
                         autoComplete="email"
                     />
                     {(!values.deviceToken) ?
-                        <Button
-                            type="submit"
-                            fullWidth
-                            variant="contained"
-                            color="secondary"
-                            className={classes.submit}
-                            onClick={clickSubmit}
-                        >
-                            Allow Notifications
-                        </Button> :
+                        <div>
+                            {(props.centers === 0) && <Alert severity="error">Your centers list is empty... First add some centers using ADD button.</Alert>}
+                            <Button
+                                type="submit"
+                                fullWidth
+                                variant="contained"
+                                color="secondary"
+                                className={classes.submit}
+                                onClick={clickSubmit}
+                            >
+                                Allow Notifications
+                            </Button>
+                        </div> :
                         (values.deviceToken === 'wait') ?
                             <Button
                                 //type="submit"
@@ -155,17 +159,20 @@ const User = (props) => {
                             >
                                 Loading...
                         </Button> :
-                            <Button
-                                type="submit"
-                                fullWidth
-                                variant="contained"
-                                color='primary'
-                                className={classes.submit}
-                                onClick={clickSubmit}
-                            //disabled={(values.deviceToken === 'wait') ? 'false' : 'true'}
-                            >
-                                Set Notifier
-                        </Button>
+                            <div>
+                                {(props.success) && <Alert severity="info">Close this tab and Keep this Browser open in background to recieve notifications...</Alert>}
+                                <Button
+                                    type="submit"
+                                    fullWidth
+                                    variant="contained"
+                                    color={(props.success) ? 'textPrimary' : 'primary'}
+                                    className={classes.submit}
+                                    onClick={clickSubmit}
+                                //disabled={(values.deviceToken === 'wait') ? 'false' : 'true'}
+                                >
+                                    {(props.success) ? 'Notifier Created!!!' : 'Set Notifier'}
+                                </Button>
+                            </div>
                     }
                 </form>
             </div>
