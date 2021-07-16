@@ -105,8 +105,9 @@ const useStyles = makeStyles((theme) => ({
         backgroundColor: theme.palette.primary.light,
         opacity: '0.9',
     },
-    row: {
-
+    action: {
+        minWidth: '93px',
+        opacity: '0.8',
     }
 }));
 
@@ -150,7 +151,7 @@ export default function Cowin() {
         var age = false
 
         center.sessions.forEach((session) => {
-            if (session.min_age_limit > minAge && session.min_age_limit < maxAge)
+            if (session.min_age_limit > minAge && session.min_age_limit < maxAge || session.allow_all_age === true)
                 age = true
         })
 
@@ -188,7 +189,7 @@ export default function Cowin() {
         var age18 = false
 
         center.sessions.forEach((session) => {
-            if (session.min_age_limit === 45)
+            if (session.min_age_limit === 45 || session.allow_all_age === true)
                 age45 = true
             if (session.min_age_limit === 18)
                 age18 = true
@@ -274,7 +275,7 @@ export default function Cowin() {
         }
 
         setList(newList)
-        console.log(list)
+        //console.log(list)
     }
 
     const addAll = () => {
@@ -294,13 +295,13 @@ export default function Cowin() {
             })
 
         setList(newList)
-        console.log(list)
+        //console.log(list)
     }
 
     const resetList = () => {
         const newList = [];
         setList(newList)
-        console.log(list)
+        //console.log(list)
     }
 
     return (
@@ -322,9 +323,10 @@ export default function Cowin() {
                             Notify Me
                     </Button>
                     </Badge> : <div></div>}
-                <Snackbar open={notifier} autoHideDuration={6000} onClose={closeNotifier}>
+                <Snackbar open={notifier} onClose={closeNotifier}>
                     <Alert onClose={closeNotifier} severity="success">
-                        Congrats!! Your Vaccine Notifier has been  Deployed Successfully...
+                        Notifier Created Successfully...
+                        Keep this Browser open in background to recieve notifications...
                     </Alert>
                 </Snackbar>
             </div>
@@ -496,19 +498,19 @@ export default function Cowin() {
                         aria-labelledby="simple-modal-title"
                         aria-describedby="simple-modal-description"
                     >
-                        <div className={classes.modal} ><User postData={postData} close={handleClose} /></div>
+                        <div className={classes.modal} ><User postData={postData} close={handleClose} success={notifier} centers={list.length} /></div>
                     </Modal>
                 </div>
                 <TableContainer className={classes.table} component={Paper}>
                     <Table aria-label="simple table">
                         <TableHead>
                             <TableRow>
+                                <TableCell align="center">Action</TableCell>
                                 <TableCell>Center Name</TableCell>
                                 <TableCell>Address</TableCell>
                                 <TableCell align="right">Vaccine</TableCell>
                                 <TableCell align="right">Age</TableCell>
                                 <TableCell align="right">Fee</TableCell>
-                                <TableCell align="center">Action</TableCell>
                             </TableRow>
                         </TableHead>
                         <TableBody>
@@ -519,13 +521,29 @@ export default function Cowin() {
                                 .filter(obj => checkAge(obj))
                                 .map((center, idx) => {
                                     return <TableRow key={center.id} className={list.includes(center._id) ? classes.addedRow : classes.row}>
+                                        <TableCell>
+                                            {list.includes(center._id) ?
+                                                <Button
+                                                    variant="contained"
+                                                    color="secondary"
+                                                    onClick={() => { addToList(center._id) }}
+                                                >
+                                                    Remove
+                                                </Button> :
+                                                <Button
+                                                    variant="contained"
+                                                    color="primary"
+                                                    className={classes.action}
+                                                    onClick={() => { addToList(center._id) }}
+                                                >
+                                                    Add
+                                                </Button>}
+                                        </TableCell>
                                         <TableCell>{center.name}</TableCell>
                                         <TableCell className={classes.address} >{center.address}</TableCell>
                                         <TableCell align="right">{printVaccines(center)}</TableCell>
                                         <TableCell align="right">{printAges(center)}</TableCell>
                                         <TableCell align="right">{center.fee_type}</TableCell>
-                                        <TableCell>
-                                            {list.includes(center._id) ? <Button color="secondary" onClick={() => { addToList(center._id) }} >Remove</Button> : <Button color="primary" onClick={() => { addToList(center._id) }} >Add</Button>}</TableCell>
                                     </TableRow>
                                 })
                             }

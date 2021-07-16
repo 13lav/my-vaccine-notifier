@@ -47,7 +47,7 @@ const ByDistrict = (props) => {
     const handleDistrict = (event) => {
         var selectedDistrict = state.districts[event.target.value]
         setDistrict(selectedDistrict);
-        console.log(district, event.target.value)
+        //console.log(district, event.target.value)
     };
 
 
@@ -61,7 +61,7 @@ const ByDistrict = (props) => {
                 },
             })
             let res = await response.json()
-            console.log(res)
+            //console.log(res)
             props.setCenters(res.data)
             setLoading(false)
             return res

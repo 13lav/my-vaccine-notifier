@@ -41,7 +41,7 @@ const ByPIN = (props) => {
                 },
             })
             let res = await response.json()
-            console.log(res)
+            //console.log(res)
             props.setCenters(res.data)
             setLoading(false)
             return res

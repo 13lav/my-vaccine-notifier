@@ -79,6 +79,9 @@ const centerSchema = new mongoose.Schema({
             available_capacity_dose2: {
                 type: Number,
             },
+            allow_all_age: {
+                type: Boolean
+            },
         }
     ]
 }, { timestamps: true }, { strict: false });

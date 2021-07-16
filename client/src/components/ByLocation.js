@@ -53,7 +53,7 @@ const ByLocation = (props) => {
                 },
             })
             let res = await response.json()
-            console.log(res)
+            //console.log(res)
             props.setCenters(res.centers)
             return res
         } catch (err) {
