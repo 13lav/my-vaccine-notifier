@@ -119,3 +119,4 @@ dist
 
 #firebase
 src/cowin-nearby-test-firebase-adminsdk-w5kwp-2c59b3865a.json
+src/utils/mailer.js

@@ -1,13 +1,13 @@
 import nodemailer from 'nodemailer';
-//import { config } from '../config/config.js';
+import { config } from '../config/config.js';
 
 const sendMail = (recipient, content) => {
 
     let transport = nodemailer.createTransport({
         service: 'gmail',
         auth: {
-            user: 'cowinnearby@gmail.com',
-            pass: 'kqocoditzlouozip' // naturally, replace both with your real credentials or an application-specific password
+            user: 'mail@gmail.com',
+            pass: '' // naturally, replace both with your real credentials or an application-specific password
         }
     });
 
